@@ -13,8 +13,12 @@ struct ContentView: View {
     
     var body: some View {
         VStack {
-            ForEach(controller.megaplexMovies, id: \.id) { megaplexMovie in
-                Text(megaplexMovie.title)
+            if controller.loading {
+                ProgressView()
+            } else {
+                ForEach(controller.megaplexMovies, id: \.id) { megaplexMovie in
+                    Text(megaplexMovie.title)
+                }
             }
         }
         .padding()
