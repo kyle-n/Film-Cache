@@ -22,7 +22,7 @@ struct MegaplexScheduledMovie: Codable {
     let distributor: String
     let rating: String
     let ratingAlt: String
-    let ratingDescription: String
+    let ratingDescription: String?
     let ratingDescriptionAlt: String
     let synopsis: String
     let synopsisAlt: String
@@ -37,7 +37,7 @@ struct MegaplexScheduledMovie: Codable {
     let twitterTag: String
     let hasSessionsAvailable: Bool
     let graphicUrl: String
-    let cinemaName: MegaplexCinemaName
+    let cinemaName: String
     let cinemaNameAlt: String
     let allowTicketSales: Bool
     let advertiseAdvanceBookingDate: Bool
@@ -92,9 +92,6 @@ struct MegaplexSession: Codable {
 }
 
 // MARK: - Enums
-enum MegaplexCinemaName: String, Codable {
-    case university = "University"
-}
 
 enum MegaplexAttributesName: String, Codable {
     case cc = "CC"
