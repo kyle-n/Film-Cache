@@ -8,7 +8,7 @@
 import Foundation
 
 // MARK: - MegaplexScheduledMovie
-struct MegaplexScheduledMovie: Codable {
+struct MegaplexScheduledMovie: Codable, Identifiable {
     let id: String
     let scheduledFilmId: String
     let cinemaId: String
