@@ -12,7 +12,6 @@ struct ContentView: View {
     @StateObject() private var controller = ContentViewController()
     
     var body: some View {
-        NavigationStack {
             VStack {
                 if controller.loading {
                     ProgressView()
@@ -21,7 +20,6 @@ struct ContentView: View {
                 }
             }
             .padding()
-        }
         .navigationTitle(APP_NAME)
         .frame(width: 700, height: 500)
     }
@@ -31,9 +29,43 @@ struct MovieList: View {
     let movies: [MegaplexScheduledMovie]
     
     var body: some View {
-        ForEach(movies) { movie in
-            MovieLink(movie: movie)
+        Table(movies) {
+            TableColumn("Title", value: \.title)
+            TableColumn("Opening") { movie in
+                Text(MovieList.getFormattedDate(forStringDate: movie.openingDate))
+            }
+            TableColumn("Runtime") { movie in
+                Text(MovieList.getFormattedRunTime(forMinutes: movie.runTime))
+            }
+            TableColumn("Distributor", value: \.distributor)
+            TableColumn("Theater", value: \.cinemaName)
         }
+    }
+    
+    private static let outputDateFormatter = {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "E, MMM. d"
+        return formatter
+    }()
+    private static let inputDateFormatter = {
+        let formatter = DateFormatter()
+        // 2025-08-29T00:00:00
+        formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss"
+        return formatter
+    }()
+    
+    private static func getFormattedDate(forStringDate strDate: String) -> String {
+        let date = inputDateFormatter.date(from: strDate)
+        guard let date else { return "" }
+        return outputDateFormatter.string(from: date)
+    }
+    
+    private static func getFormattedRunTime(forMinutes min: String) -> String {
+        let minutes = Int(min)
+        guard let minutes else { return "" }
+        let hours = Int(floor(Double(minutes) / 60))
+        let leftoverMinutes = minutes % 60
+        return "\(hours)h \(leftoverMinutes)m"
     }
 }
 
