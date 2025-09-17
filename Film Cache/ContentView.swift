@@ -12,16 +12,14 @@ struct ContentView: View {
     @StateObject() private var controller = ContentViewController()
     
     var body: some View {
-            VStack {
-                if controller.loading {
-                    ProgressView()
-                } else {
-                    MovieList(movies: controller.megaplexMovies)
-                }
+        Group {
+            if controller.loading {
+                ProgressView()
+            } else {
+                MovieList(movies: controller.megaplexMovies)
             }
-            .padding()
+        }
         .navigationTitle(APP_NAME)
-        .frame(width: 700, height: 500)
     }
 }
 
