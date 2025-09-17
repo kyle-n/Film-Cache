@@ -23,51 +23,6 @@ struct ContentView: View {
     }
 }
 
-struct MovieList: View {
-    let movies: [MegaplexScheduledMovie]
-    
-    @State private var sortedMovies: [MegaplexScheduledMovie]
-    @State private var sortOrder: [KeyPathComparator<MegaplexScheduledMovie>]
-    
-    init(movies: [MegaplexScheduledMovie]) {
-        self.movies = movies
-        let sortOrder = [KeyPathComparator(\MegaplexScheduledMovie.openingDate)]
-        self.sortOrder = sortOrder
-        self.sortedMovies = movies.sorted(using: sortOrder)
-    }
-    
-    var body: some View {
-        Table(sortedMovies, sortOrder: $sortOrder) {
-            TableColumn("Title", value: \.title)
-            TableColumn("Opening") { movie in
-                MegaplexDate(date: movie.openingDate)
-            }
-            TableColumn("Runtime") { movie in
-                Text(MovieList.getFormattedRunTime(forMinutes: movie.runTime))
-            }
-            TableColumn("Distributor", value: \.distributor)
-            TableColumn("Theater", value: \.cinemaName)
-        }
-        .onAppear(perform: {
-            print("\n\nqqq\n\n")
-        })
-        .onChange(of: movies, { _, newMovies in
-            self.sortedMovies = movies.sorted(using: sortOrder)
-        })
-        .onChange(of: sortOrder) { _, newSortOrder in
-            sortedMovies.sort(using: newSortOrder)
-        }
-    }
-    
-    private static func getFormattedRunTime(forMinutes min: String) -> String {
-        let minutes = Int(min)
-        guard let minutes else { return "" }
-        let hours = Int(floor(Double(minutes) / 60))
-        let leftoverMinutes = minutes % 60
-        return "\(hours)h \(leftoverMinutes)m"
-    }
-}
-
 struct MegaplexDate: View {
     let date: String
     
