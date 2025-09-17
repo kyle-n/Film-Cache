@@ -26,8 +26,18 @@ struct ContentView: View {
 struct MovieList: View {
     let movies: [MegaplexScheduledMovie]
     
+    @State private var sortedMovies: [MegaplexScheduledMovie]
+    @State private var sortOrder: [KeyPathComparator<MegaplexScheduledMovie>]
+    
+    init(movies: [MegaplexScheduledMovie]) {
+        self.movies = movies
+        let sortOrder = [KeyPathComparator(\MegaplexScheduledMovie.openingDate)]
+        self.sortOrder = sortOrder
+        self.sortedMovies = movies.sorted(using: sortOrder)
+    }
+    
     var body: some View {
-        Table(movies) {
+        Table(sortedMovies, sortOrder: $sortOrder) {
             TableColumn("Title", value: \.title)
             TableColumn("Opening") { movie in
                 MegaplexDate(date: movie.openingDate)
@@ -37,6 +47,15 @@ struct MovieList: View {
             }
             TableColumn("Distributor", value: \.distributor)
             TableColumn("Theater", value: \.cinemaName)
+        }
+        .onAppear(perform: {
+            print("\n\nqqq\n\n")
+        })
+        .onChange(of: movies, { _, newMovies in
+            self.sortedMovies = movies.sorted(using: sortOrder)
+        })
+        .onChange(of: sortOrder) { _, newSortOrder in
+            sortedMovies.sort(using: newSortOrder)
         }
     }
     

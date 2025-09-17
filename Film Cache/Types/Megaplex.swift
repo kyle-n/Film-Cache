@@ -8,7 +8,7 @@
 import Foundation
 
 // MARK: - MegaplexScheduledMovie
-struct MegaplexScheduledMovie: Codable, Identifiable {
+struct MegaplexScheduledMovie: Codable, Identifiable, Equatable {
     let id: String
     let scheduledFilmId: String
     let cinemaId: String
@@ -55,6 +55,10 @@ struct MegaplexScheduledMovie: Codable, Identifiable {
     let genreId3: String?
     let genreIDs: [String?]
     let additionalUrls: AnyCodable?
+    
+    static func == (lhs: MegaplexScheduledMovie, rhs: MegaplexScheduledMovie) -> Bool {
+        return lhs.id == rhs.id
+    }
 }
 
 // MARK: - MegaplexSession
