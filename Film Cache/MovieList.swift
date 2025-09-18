@@ -16,7 +16,7 @@ struct MovieList: View {
     }
     
     var body: some View {
-        Table(controller.sortedMovies, sortOrder: $controller.sortOrder) {
+        Table(controller.sortedMovies, selection: $controller.selectedRow, sortOrder: $controller.sortOrder) {
             TableColumn("Title", value: \.title)
             TableColumn("Opening", value: \.openingDate) { movie in
                 FCFormattedDate(movie.openingDate)
@@ -35,6 +35,7 @@ fileprivate final class MovieListController: ObservableObject {
         return movies.sorted(using: sortOrder)
     }
     @Published var sortOrder: [KeyPathComparator<FCMovie>]
+    @Published var selectedRow: FCMovie.ID?
     
     private var movies: [FCMovie]
     

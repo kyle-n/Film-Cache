@@ -42,7 +42,6 @@ enum TMDBConnector {
     
     static func getMovie(byTitle title: String) async throws -> TMDBMovieDetails {
         let searchResults = try await searchMovies(title: title)
-        print(searchResults.count, "qqq count")
         guard let result = searchResults.first else {
             throw NSError(domain: "No movies returned from title search", code: 404)
         }
