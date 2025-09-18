@@ -15,8 +15,7 @@ enum TMDBConnector {
         url.append(queryItems: [
             URLQueryItem(name: "query", value: title),
             URLQueryItem(name: "include_adult", value: "false"),
-            URLQueryItem(name: "primary_release_year", value: String(currentYear)),
-            URLQueryItem(name: "video", value: "false")
+            URLQueryItem(name: "primary_release_year", value: String(currentYear))
         ])
         
         var request = URLRequest(url: url)
