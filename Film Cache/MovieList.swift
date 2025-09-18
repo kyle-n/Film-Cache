@@ -18,7 +18,7 @@ struct MovieList: View {
     var body: some View {
         Table(controller.sortedMovies, sortOrder: $controller.sortOrder) {
             TableColumn("Title", value: \.title)
-            TableColumn("Opening") { movie in
+            TableColumn("Opening", value: \.openingDate) { movie in
                 FCFormattedDate(movie.openingDate)
             }
             TableColumn("Runtime", value: \.runTimeMinutes) { movie in

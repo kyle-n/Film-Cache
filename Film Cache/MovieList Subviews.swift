@@ -8,9 +8,9 @@
 import SwiftUI
 
 struct FCFormattedDate: View {
-    private let date: Date?
+    private let date: Date
     
-    init(_ date: Date?) {
+    init(_ date: Date) {
         self.date = date
     }
     
@@ -19,7 +19,7 @@ struct FCFormattedDate: View {
     }
     
     private var formattedDate: String {
-        guard let date else { return "" }
+        guard date.timeIntervalSince1970 != FCMovie.blankDate.timeIntervalSince1970 else { return "" }
         return FCFormattedDate.outputDateFormatter.string(from: date)
     }
     

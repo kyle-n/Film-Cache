@@ -10,8 +10,10 @@ import Foundation
 struct FCMovie: Identifiable {
     let id: String
     let title: String
-    let openingDate: Date?
+    let openingDate: Date
     let runTimeMinutes: Int
     let distributor: String
     let theaterName: String
+    
+    static let blankDate = Date(timeIntervalSince1970: 0)
 }

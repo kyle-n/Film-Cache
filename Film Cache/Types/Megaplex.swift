@@ -59,7 +59,7 @@ struct MegaplexScheduledMovie: Codable, Identifiable, Equatable {
     func toFCMovie() -> FCMovie {
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss"
-        let openingDate = formatter.date(from: self.openingDate)
+        let openingDate = formatter.date(from: self.openingDate) ?? FCMovie.blankDate
         let runTimeMinutes = Int(self.runTime) ?? 0
         return FCMovie(id: self.id, title: self.title, openingDate: openingDate, runTimeMinutes: runTimeMinutes, distributor: self.distributor, theaterName: self.cinemaName)
     }
