@@ -16,15 +16,27 @@ struct ContentView: View {
             if controller.loading {
                 ProgressView()
             } else {
-                FCMovieList(movies: controller.movies)
+                FCListDetailsSplitPane(movies: controller.movies)
             }
         }
         .navigationTitle(APP_NAME)
     }
 }
 
+struct FCListDetailsSplitPane: View {
+    let movies: [FCMovie]
+    
+    @State private var selectedMovieID: FCMovie.ID?
+    
+    var body: some View {
+        HStack {
+            FCMovieList(movies: movies, selectedMovieID: $selectedMovieID)
+        }
+    }
+}
+
 #Preview {
-    FCMovieList(movies: [mockMovieCaughtStealing.toFCMovie()])
+    FCListDetailsSplitPane(movies: [mockMovieCaughtStealing.toFCMovie()])
         .frame(width: 700, height: 500)
         .navigationTitle(APP_NAME)
 }

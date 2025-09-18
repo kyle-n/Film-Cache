@@ -9,14 +9,13 @@ import SwiftUI
 
 struct FCMovieList: View {
     
-    @StateObject private var controller: FCMovieListController
+    let movies: [FCMovie]
+    @Binding var selectedMovieID: FCMovie.ID?
     
-    init(movies: [FCMovie]) {
-        self._controller = StateObject(wrappedValue: FCMovieListController(movies: movies))
-    }
+    @State private var sortOrder: [KeyPathComparator<FCMovie>] = [KeyPathComparator(\FCMovie.openingDate)]
     
     var body: some View {
-        Table(controller.sortedMovies, selection: $controller.selectedRow, sortOrder: $controller.sortOrder) {
+        Table(sortedMovies, selection: $selectedMovieID, sortOrder: $sortOrder) {
             TableColumn("Title", value: \.title)
             TableColumn("Opening", value: \.openingDate) { movie in
                 FCFormattedDate(movie.openingDate)
@@ -28,30 +27,17 @@ struct FCMovieList: View {
             TableColumn("Theater", value: \.theaterName)
         }
     }
-}
-
-fileprivate final class FCMovieListController: ObservableObject {
-    var sortedMovies: [FCMovie] {
+    
+    private var sortedMovies: [FCMovie] {
         return movies.sorted(using: sortOrder)
-    }
-    @Published var sortOrder: [KeyPathComparator<FCMovie>]
-    @Published var selectedRow: FCMovie.ID?
-    
-    private var movies: [FCMovie]
-    
-    init(movies: [FCMovie]) {
-        self.movies = movies
-        let sortOrder = [KeyPathComparator(\FCMovie.openingDate)]
-        self.sortOrder = sortOrder
-    }
-    
-    func updateMovies(newMovies: [FCMovie]) {
-        self.movies = newMovies
     }
 }
 
 #Preview {
-    FCMovieList(movies: [mockMovieCaughtStealing.toFCMovie()])
+    FCMovieList(
+        movies: [mockMovieCaughtStealing.toFCMovie()],
+        selectedMovieID: .constant(nil)
+    )
         .frame(width: 700, height: 500)
         .navigationTitle(APP_NAME)
 }
