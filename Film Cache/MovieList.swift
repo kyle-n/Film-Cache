@@ -40,22 +40,9 @@ struct MovieList: View {
 
 fileprivate final class MovieListController: ObservableObject {
     var sortedMovies: [MegaplexScheduledMovie] {
-        if sortOrder.first?.keyPath == \.runTime {
-            return movies.sorted { a, b in
-                let aTime = Int(a.runTime) ?? 0
-                let bTime = Int(b.runTime) ?? 0
-                return sortOrder.first?.order == .reverse ? aTime > bTime : bTime > aTime
-            }
-        }
-        
         return movies.sorted(using: sortOrder)
     }
-    
-    @Published var sortOrder: [KeyPathComparator<MegaplexScheduledMovie>] {
-        didSet {
-            print("qqq set")
-        }
-    }
+    @Published var sortOrder: [KeyPathComparator<MegaplexScheduledMovie>]
     
     private var movies: [MegaplexScheduledMovie]
     
