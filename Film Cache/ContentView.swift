@@ -16,7 +16,7 @@ struct ContentView: View {
             if controller.loading {
                 ProgressView()
             } else {
-                MovieList(movies: controller.movies)
+                FCMovieList(movies: controller.movies)
             }
         }
         .navigationTitle(APP_NAME)
@@ -24,7 +24,7 @@ struct ContentView: View {
 }
 
 #Preview {
-    MovieList(movies: [mockMovieCaughtStealing.toFCMovie()])
+    FCMovieList(movies: [mockMovieCaughtStealing.toFCMovie()])
         .frame(width: 700, height: 500)
         .navigationTitle(APP_NAME)
 }

@@ -1,5 +1,5 @@
 //
-//  MovieList.swift
+//  FCMovieList.swift
 //  Film Cache
 //
 //  Created by Kyle Nazario on 9/17/25.
@@ -7,12 +7,12 @@
 
 import SwiftUI
 
-struct MovieList: View {
+struct FCMovieList: View {
     
-    @StateObject private var controller: MovieListController
+    @StateObject private var controller: FCMovieListController
     
     init(movies: [FCMovie]) {
-        self._controller = StateObject(wrappedValue: MovieListController(movies: movies))
+        self._controller = StateObject(wrappedValue: FCMovieListController(movies: movies))
     }
     
     var body: some View {
@@ -30,7 +30,7 @@ struct MovieList: View {
     }
 }
 
-fileprivate final class MovieListController: ObservableObject {
+fileprivate final class FCMovieListController: ObservableObject {
     var sortedMovies: [FCMovie] {
         return movies.sorted(using: sortOrder)
     }
@@ -51,7 +51,7 @@ fileprivate final class MovieListController: ObservableObject {
 }
 
 #Preview {
-    MovieList(movies: [mockMovieCaughtStealing.toFCMovie()])
+    FCMovieList(movies: [mockMovieCaughtStealing.toFCMovie()])
         .frame(width: 700, height: 500)
         .navigationTitle(APP_NAME)
 }
