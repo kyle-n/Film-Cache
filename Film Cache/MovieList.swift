@@ -21,7 +21,7 @@ struct MovieList: View {
             TableColumn("Opening") { movie in
                 MegaplexDate(date: movie.openingDate)
             }
-            TableColumn("Runtime") { movie in
+            TableColumn("Runtime", value: \.runTime) { movie in
                 Text(MovieList.getFormattedRunTime(forMinutes: movie.runTime))
             }
             TableColumn("Distributor", value: \.distributor)
@@ -40,9 +40,22 @@ struct MovieList: View {
 
 fileprivate final class MovieListController: ObservableObject {
     var sortedMovies: [MegaplexScheduledMovie] {
-        movies.sorted(using: sortOrder)
+        if sortOrder.first?.keyPath == \.runTime {
+            return movies.sorted { a, b in
+                let aTime = Int(a.runTime) ?? 0
+                let bTime = Int(b.runTime) ?? 0
+                return sortOrder.first?.order == .reverse ? aTime > bTime : bTime > aTime
+            }
+        }
+        
+        return movies.sorted(using: sortOrder)
     }
-    @Published var sortOrder: [KeyPathComparator<MegaplexScheduledMovie>]
+    
+    @Published var sortOrder: [KeyPathComparator<MegaplexScheduledMovie>] {
+        didSet {
+            print("qqq set")
+        }
+    }
     
     private var movies: [MegaplexScheduledMovie]
     
