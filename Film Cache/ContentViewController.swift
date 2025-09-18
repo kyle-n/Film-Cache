@@ -8,7 +8,7 @@
 import SwiftUI
 
 final class ContentViewController: ObservableObject {
-    @Published private(set) var megaplexMovies: [MegaplexScheduledMovie] = []
+    @Published private(set) var movies: [FCMovie] = []
     @Published private(set) var loading = false
     
     init() {
@@ -22,8 +22,7 @@ final class ContentViewController: ObservableObject {
         Task {
             let moviesFromAPI = try await MegaplexConnector.getScheduledMovies(forTheaterId: "0010")
             DispatchQueue.main.async {
-                print("qqq setting movies", moviesFromAPI)
-                self.megaplexMovies = moviesFromAPI
+                self.movies = moviesFromAPI.map { $0.toFCMovie() }
                 self.loading = false
             }
         }

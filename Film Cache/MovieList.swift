@@ -11,7 +11,7 @@ struct MovieList: View {
     
     @StateObject private var controller: MovieListController
     
-    init(movies: [MegaplexScheduledMovie]) {
+    init(movies: [FCMovie]) {
         self._controller = StateObject(wrappedValue: MovieListController(movies: movies))
     }
     
@@ -19,46 +19,38 @@ struct MovieList: View {
         Table(controller.sortedMovies, sortOrder: $controller.sortOrder) {
             TableColumn("Title", value: \.title)
             TableColumn("Opening") { movie in
-                MegaplexDate(date: movie.openingDate)
+                FCFormattedDate(movie.openingDate)
             }
-            TableColumn("Runtime", value: \.runTime) { movie in
-                Text(MovieList.getFormattedRunTime(forMinutes: movie.runTime))
+            TableColumn("Runtime", value: \.runTimeMinutes) { movie in
+                FCFormattedRunTime(movie.runTimeMinutes)
             }
             TableColumn("Distributor", value: \.distributor)
-            TableColumn("Theater", value: \.cinemaName)
+            TableColumn("Theater", value: \.theaterName)
         }
-    }
-    
-    private static func getFormattedRunTime(forMinutes min: String) -> String {
-        let minutes = Int(min)
-        guard let minutes else { return "" }
-        let hours = Int(floor(Double(minutes) / 60))
-        let leftoverMinutes = minutes % 60
-        return "\(hours)h \(leftoverMinutes)m"
     }
 }
 
 fileprivate final class MovieListController: ObservableObject {
-    var sortedMovies: [MegaplexScheduledMovie] {
+    var sortedMovies: [FCMovie] {
         return movies.sorted(using: sortOrder)
     }
-    @Published var sortOrder: [KeyPathComparator<MegaplexScheduledMovie>]
+    @Published var sortOrder: [KeyPathComparator<FCMovie>]
     
-    private var movies: [MegaplexScheduledMovie]
+    private var movies: [FCMovie]
     
-    init(movies: [MegaplexScheduledMovie]) {
+    init(movies: [FCMovie]) {
         self.movies = movies
-        let sortOrder = [KeyPathComparator(\MegaplexScheduledMovie.title)]
+        let sortOrder = [KeyPathComparator(\FCMovie.openingDate)]
         self.sortOrder = sortOrder
     }
     
-    func updateMovies(newMovies: [MegaplexScheduledMovie]) {
+    func updateMovies(newMovies: [FCMovie]) {
         self.movies = newMovies
     }
 }
 
 #Preview {
-    MovieList(movies: [mockMovieCaughtStealing])
+    MovieList(movies: [mockMovieCaughtStealing.toFCMovie()])
         .frame(width: 700, height: 500)
         .navigationTitle(APP_NAME)
 }

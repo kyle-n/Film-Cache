@@ -16,54 +16,15 @@ struct ContentView: View {
             if controller.loading {
                 ProgressView()
             } else {
-                MovieList(movies: controller.megaplexMovies)
+                MovieList(movies: controller.movies)
             }
         }
         .navigationTitle(APP_NAME)
     }
 }
 
-struct MegaplexDate: View {
-    let date: String
-    
-    var body: some View {
-        Text(MegaplexDate.getFormattedDate(forStringDate: date))
-    }
-    
-    private static let outputDateFormatter = {
-        let formatter = DateFormatter()
-        formatter.dateFormat = "E, MMM. d"
-        return formatter
-    }()
-    private static let inputDateFormatter = {
-        let formatter = DateFormatter()
-        formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss"
-        return formatter
-    }()
-    
-    private static func getFormattedDate(forStringDate strDate: String) -> String {
-        let date = inputDateFormatter.date(from: strDate)
-        guard let date else { return "" }
-        return outputDateFormatter.string(from: date)
-    }
-}
-
-struct MovieLink: View {
-    let movie: MegaplexScheduledMovie
-    
-    var body: some View {
-        Text(movie.title)
-            .font(.title)
-            .padding()
-            .overlay {
-                RoundedRectangle(cornerRadius: 20, style: .continuous)
-                    .stroke(Color.red, lineWidth: 2)
-            }
-    }
-}
-
 #Preview {
-    MovieList(movies: [mockMovieCaughtStealing])
+    MovieList(movies: [mockMovieCaughtStealing.toFCMovie()])
         .frame(width: 700, height: 500)
         .navigationTitle(APP_NAME)
 }
