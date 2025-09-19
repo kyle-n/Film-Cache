@@ -70,7 +70,12 @@ struct FCMovieDetails: View {
                             .frame(maxWidth: 35, maxHeight: 15)
                             .scaledToFit()
                     }
-                    Link("TMDB", destination: URL(string: "https://www.themoviedb.org/movie/\(details.id)")!)
+                    Link(destination: URL(string: "https://www.themoviedb.org/movie/\(details.id)")!) {
+                        Image("TMDBIcon")
+                            .resizable()
+                            .renderingMode(.template)
+                            .frame(maxWidth: 20, maxHeight: 15)
+                    }
                     Link("Letterboxd", destination: URL(string: "https://letterboxd.com/imdb/\(details.imdbID)")!)
                 }
                 if let posterURL {
