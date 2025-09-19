@@ -29,10 +29,13 @@ struct FCListDetailsSplitPane: View {
     @Binding var selectedMovieID: FCMovie.ID?
     
     var body: some View {
-        HStack {
-            FCMovieList(movies: movies, selectedMovieID: $selectedMovieID)
-            if let selectedMovie {
-                FCMovieDetails(movie: selectedMovie)
+        GeometryReader { geo in
+            HSplitView {
+                FCMovieList(movies: movies, selectedMovieID: $selectedMovieID)
+                if let selectedMovie {
+                    FCMovieDetails(movie: selectedMovie)
+                        .frame(width: max(geo.size.width / 3, 300))
+                }
             }
         }
     }
@@ -43,10 +46,19 @@ struct FCListDetailsSplitPane: View {
 }
 
 #Preview {
-    FCListDetailsSplitPane(
-        movies: [mockMovieCaughtStealing.toFCMovie()],
-        selectedMovieID: .constant(mockMovieCaughtStealing.id)
-    )
-        .frame(width: 700, height: 500)
+    VStack {
+        FCListDetailsSplitPane(
+            movies: [mockMovieCaughtStealing.toFCMovie()],
+            selectedMovieID: .constant(mockMovieCaughtStealing.id)
+        )
+        .frame(width: 700, height: 350)
         .navigationTitle(APP_NAME)
+        .border(Color.white)
+        FCListDetailsSplitPane(
+            movies: [mockMovieCaughtStealing.toFCMovie()],
+            selectedMovieID: .constant(nil)
+        )
+        .frame(width: 700, height: 350)
+        .navigationTitle(APP_NAME)
+    }
 }
