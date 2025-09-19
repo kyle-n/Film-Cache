@@ -54,6 +54,8 @@ fileprivate final class FCMovieDetailsContainerController: ObservableObject {
 struct FCMovieDetails: View {
     let details: TMDBMovieDetails
     
+    private let iconLinkHeight: CGFloat = 30
+    
     var body: some View {
         ScrollView {
             
@@ -67,16 +69,23 @@ struct FCMovieDetails: View {
                         Image("IMDBIcon")
                             .resizable()
                             .renderingMode(.template)
-                            .frame(maxWidth: 35, maxHeight: 15)
+                            .frame(maxWidth: 60, maxHeight: iconLinkHeight)
                             .scaledToFit()
                     }
+                    .padding(.trailing)
+                    .foregroundStyle(Color.white)
                     Link(destination: URL(string: "https://www.themoviedb.org/movie/\(details.id)")!) {
                         Image("TMDBIcon")
                             .resizable()
-                            .renderingMode(.template)
-                            .frame(maxWidth: 20, maxHeight: 15)
+                            .frame(maxWidth: 35, maxHeight: iconLinkHeight)
                     }
-                    Link("Letterboxd", destination: URL(string: "https://letterboxd.com/imdb/\(details.imdbID)")!)
+                    .padding(.trailing)
+                    Link(destination: URL(string: "https://letterboxd.com/imdb/\(details.imdbID)")!) {
+                        Image("LetterboxdLogo")
+                            .resizable()
+                            .frame(maxWidth: iconLinkHeight, maxHeight: iconLinkHeight)
+                    }
+                    Spacer()
                 }
                 if let posterURL {
                     AsyncImage(url: posterURL) { imgResult in
