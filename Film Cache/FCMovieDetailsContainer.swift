@@ -63,7 +63,13 @@ struct FCMovieDetails: View {
                     .bold()
                     .padding(.top)
                 HStack {
-                    Link("IMDB", destination: URL(string: "https://www.imdb.com/title/\(details.imdbID)")!)
+                    Link(destination: URL(string: "https://www.imdb.com/title/\(details.imdbID)")!) {
+                        Image("IMDBIcon")
+                            .resizable()
+                            .renderingMode(.template)
+                            .frame(maxWidth: 35, maxHeight: 15)
+                            .scaledToFit()
+                    }
                     Link("TMDB", destination: URL(string: "https://www.themoviedb.org/movie/\(details.id)")!)
                     Link("Letterboxd", destination: URL(string: "https://letterboxd.com/imdb/\(details.imdbID)")!)
                 }
