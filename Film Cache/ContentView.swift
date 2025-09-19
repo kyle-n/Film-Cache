@@ -33,7 +33,7 @@ struct FCListDetailsSplitPane: View {
             HSplitView {
                 FCMovieList(movies: movies, selectedMovieID: $selectedMovieID)
                 if let selectedMovie {
-                    FCMovieDetails(movie: selectedMovie)
+                    FCMovieDetailsContainer(movie: selectedMovie)
                         .frame(width: max(geo.size.width / 3, 300))
                 }
             }

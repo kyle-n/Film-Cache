@@ -95,3 +95,94 @@ let mockMovieCaughtStealing = MegaplexScheduledMovie(
     genreIDs: ["0000000005", "0000000016", nil],
     additionalUrls: nil
 )
+
+let mockDetailsCS = try! JSONDecoder().decode(TMDBMovieDetails.self, from: """
+{
+  "adult": false,
+  "backdrop_path": "/9ZhhlJbtLmzjvdbxbNzHZEBFdIZ.jpg",
+  "belongs_to_collection": null,
+  "budget": 40000000,
+  "genres": [
+    {
+      "id": 80,
+      "name": "Crime"
+    },
+    {
+      "id": 53,
+      "name": "Thriller"
+    },
+    {
+      "id": 35,
+      "name": "Comedy"
+    }
+  ],
+  "homepage": "https://caughtstealing.movie",
+  "id": 1245993,
+  "imdb_id": "tt1493274",
+  "origin_country": [
+    "US"
+  ],
+  "original_language": "en",
+  "original_title": "Caught Stealing",
+  "overview": "Burned-out ex-baseball player Hank Thompson unexpectedly finds himself embroiled in a dangerous struggle for survival amidst the criminal underbelly of 1990s New York City, forced to navigate a treacherous underworld he never imagined.",
+  "popularity": 14.4907,
+  "poster_path": "/cvda8s5J8YaHjTyEyXQpvD6f3iV.jpg",
+  "production_companies": [
+    {
+      "id": 7503,
+      "logo_path": "/3K8wbNkTn7O4wX89ucnp1ZYR1XF.png",
+      "name": "Protozoa Pictures",
+      "origin_country": "US"
+    },
+    {
+      "id": 22213,
+      "logo_path": "/qx9K6bFWJupwde0xQDwOvXkOaL8.png",
+      "name": "TSG Entertainment",
+      "origin_country": "US"
+    },
+    {
+      "id": 5,
+      "logo_path": "/71BqEFAF4V3qjjMPCpLuyJFB9A.png",
+      "name": "Columbia Pictures",
+      "origin_country": "US"
+    }
+  ],
+  "production_countries": [
+    {
+      "iso_3166_1": "US",
+      "name": "United States of America"
+    }
+  ],
+  "release_date": "2025-08-26",
+  "revenue": 27400375,
+  "runtime": 107,
+  "spoken_languages": [
+    {
+      "english_name": "English",
+      "iso_639_1": "en",
+      "name": "English"
+    },
+    {
+      "english_name": "Russian",
+      "iso_639_1": "ru",
+      "name": "Pусский"
+    },
+    {
+      "english_name": "Spanish",
+      "iso_639_1": "es",
+      "name": "Español"
+    },
+    {
+      "english_name": "Yiddish",
+      "iso_639_1": "yi",
+      "name": ""
+    }
+  ],
+  "status": "Released",
+  "tagline": "2 Russians, 2 Jews, and a Puerto Rican walk into a bar...",
+  "title": "Caught Stealing",
+  "video": false,
+  "vote_average": 6.952,
+  "vote_count": 189
+}
+""".data(using: .utf8)!)
