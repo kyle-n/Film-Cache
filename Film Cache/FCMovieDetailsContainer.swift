@@ -73,7 +73,7 @@ struct FCMovieDetails: View {
                             .scaledToFit()
                     }
                     .padding(.trailing)
-                    .foregroundStyle(Color.white)
+                    .foregroundStyle(Color.yellow)
                     Link(destination: URL(string: "https://www.themoviedb.org/movie/\(details.id)")!) {
                         Image("TMDBIcon")
                             .resizable()
