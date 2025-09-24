@@ -9,6 +9,7 @@ import Foundation
 
 struct FCMovie: Identifiable {
     let id: String
+    let megaplexFilmId: String?
     let title: String
     let openingDate: Date
     let runTimeMinutes: Int
@@ -17,6 +18,23 @@ struct FCMovie: Identifiable {
     let screenings: [FCScreening]
     
     static let blankDate = Date(timeIntervalSince1970: 0)
+}
+
+extension [FCMovie] {
+    func merged(with movies: [FCMovie]) -> [FCMovie] {
+        var merged: [FCMovie] = []
+        let nonUniqueMerged = self + movies
+        nonUniqueMerged.forEach { movie in
+            let alreadyMerged = merged.contains { mergedMovie in
+                mergedMovie.megaplexFilmId == movie.megaplexFilmId
+            }
+            guard !alreadyMerged else { return }
+            let moviesWithMegaplexId = nonUniqueMerged.filter { $0.megaplexFilmId == movie.megaplexFilmId }
+            let combined = FCMovie(id: movie.id, megaplexFilmId: movie.megaplexFilmId, title: movie.title, openingDate: movie.openingDate, runTimeMinutes: movie.runTimeMinutes, distributor: movie.distributor, theaterName: movie.theaterName, screenings: moviesWithMegaplexId.flatMap { $0.screenings })
+            merged.append(combined)
+        }
+        return merged
+    }
 }
 
 struct FCScreening: Identifiable {

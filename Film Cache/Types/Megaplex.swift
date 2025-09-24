@@ -63,6 +63,7 @@ struct MegaplexScheduledMovie: Codable, Identifiable, Equatable {
         let runTimeMinutes = Int(self.runTime) ?? 0
         return FCMovie(
             id: self.id,
+            megaplexFilmId: self.scheduledFilmId,
             title: self.title,
             openingDate: openingDate,
             runTimeMinutes: runTimeMinutes,
