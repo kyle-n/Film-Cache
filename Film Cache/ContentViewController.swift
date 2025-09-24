@@ -13,16 +13,19 @@ final class ContentViewController: ObservableObject {
     
     init() {
         DispatchQueue.main.async {
-            self.loadMegaplexMovies()
+            self.loadMovies()
         }
     }
     
-    func loadMegaplexMovies() {
+    func loadMovies() {
         self.loading = true
+        self.movies = []
         Task {
-            let moviesFromAPI = try await MegaplexConnector.getScheduledMovies(forTheaterId: "0010")
+            let providenceMovies = try await MegaplexConnector.getScheduledMovies(forTheaterId: FCTheater.MegaplexProvidence.rawValue)
+            let universityMovies = try await MegaplexConnector.getScheduledMovies(forTheaterId: FCTheater.MegaplexUniversity.rawValue)
+            let megaplexMovies = (providenceMovies + universityMovies).map { $0.toFCMovie() }
             DispatchQueue.main.async {
-                self.movies = moviesFromAPI.map { $0.toFCMovie() }
+                self.movies = megaplexMovies
                 self.loading = false
             }
         }

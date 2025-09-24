@@ -30,12 +30,15 @@ struct FCScreening: Identifiable {
 enum FCTheater: String, CaseIterable {
     // Megaplex cases use their internal IDs
     case MegaplexProvidence = "0010"
+    case MegaplexUniversity = "0008"
     case UtahTheater
     
     var formattedName: String {
         switch (self) {
         case .MegaplexProvidence:
             return "Megaplex Providence"
+        case .MegaplexUniversity:
+            return "Megaplex University Stadium 6"
         case .UtahTheater:
             return "The Utah Theater"
         }
