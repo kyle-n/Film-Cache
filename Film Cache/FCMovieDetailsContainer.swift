@@ -85,6 +85,9 @@ struct FCMovieDetails: View {
                 FCMovieDetailList(details: details)
                 Divider()
                     .padding(.vertical)
+                Text("Screenings")
+                    .font(.title2)
+                    .bold()
                 FCScreeningList(screenings: movie.screenings)
             }
             .padding(.bottom)
@@ -102,14 +105,31 @@ struct FCScreeningList: View {
     
     var body: some View {
         VStack {
-            ForEach(screenings) { screening in
-                HStack {
-                    Text(screening.theater.formattedName)
-                    Spacer()
-                    FCFormattedDate(screening.time)
+            ForEach(FCTheater.allCases, id: \.self) { theater in
+                if let screeningsForTheater = screeningsByTheater[theater] {
+                    Text(theater.formattedName)
+                        .font(.title3)
+                        .bold()
+                        .padding(.vertical)
+                    ForEach(screeningsForTheater) { screening in
+                        HStack {
+                            FCFormattedDate(screening.time, displayTime: true)
+                            Spacer()
+                        }
+                    }
                 }
             }
         }
+    }
+    
+    private var screeningsByTheater: Dictionary<FCTheater, [FCScreening]> {
+        var groupedScreenings = Dictionary<FCTheater, [FCScreening]>()
+        screenings.forEach { screening in
+            var screeningsForTheater = groupedScreenings[screening.theater] ?? []
+            screeningsForTheater.append(screening)
+            groupedScreenings[screening.theater] = screeningsForTheater
+        }
+        return groupedScreenings
     }
 }
 
