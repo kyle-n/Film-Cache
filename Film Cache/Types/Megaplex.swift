@@ -114,12 +114,14 @@ enum MegaplexAttributesName: String, Codable {
     case sensory = "Sensory"
     case the2D = "2D"
     case the3D = "3D"
+    case englishDub = "EnglishDub"
 }
 
 enum MegaplexFormat: String, Codable {
     case the0000000001 = "0000000001"
     case the0000000017 = "0000000017"
     case vs00000001 = "VS00000001"
+    case the0000000023 = "0000000023"
 }
 
 enum MegaplexTypeCode: String, Codable {
