@@ -24,7 +24,7 @@ struct FCMovieList: View {
                 FCFormattedRunTime(movie.runTimeMinutes)
             }
             TableColumn("Distributor", value: \.distributor)
-            TableColumn("Theater", value: \.theaterName)
+            TableColumn("Theater(s)", value: \.theaterName)
         }
     }
     

@@ -30,7 +30,10 @@ extension [FCMovie] {
             }
             guard !alreadyMerged else { return }
             let moviesWithMegaplexId = nonUniqueMerged.filter { $0.megaplexFilmId == movie.megaplexFilmId }
-            let combined = FCMovie(id: movie.id, megaplexFilmId: movie.megaplexFilmId, title: movie.title, openingDate: movie.openingDate, runTimeMinutes: movie.runTimeMinutes, distributor: movie.distributor, theaterName: movie.theaterName, screenings: moviesWithMegaplexId.flatMap { $0.screenings })
+            let theaterName = moviesWithMegaplexId
+                .map { $0.theaterName }
+                .joined(separator: ", ")
+            let combined = FCMovie(id: movie.id, megaplexFilmId: movie.megaplexFilmId, title: movie.title, openingDate: movie.openingDate, runTimeMinutes: movie.runTimeMinutes, distributor: movie.distributor, theaterName: theaterName, screenings: moviesWithMegaplexId.flatMap { $0.screenings })
             merged.append(combined)
         }
         return merged
