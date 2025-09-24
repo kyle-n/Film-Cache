@@ -18,7 +18,7 @@ struct FCMovieDetailsContainer: View {
                 ProgressView()
             }
             if let movieDetails = controller.movieDetails {
-                FCMovieDetails(details: movieDetails)
+                FCMovieDetails(movie: movie, details: movieDetails)
             }
             Spacer()
         }
@@ -52,6 +52,7 @@ fileprivate final class FCMovieDetailsContainerController: ObservableObject {
 }
 
 struct FCMovieDetails: View {
+    let movie: FCMovie
     let details: TMDBMovieDetails
     
     private let iconLinkHeight: CGFloat = 30
@@ -82,6 +83,9 @@ struct FCMovieDetails: View {
                 Divider()
                     .padding(.vertical)
                 FCMovieDetailList(details: details)
+                Divider()
+                    .padding(.vertical)
+                FCScreeningList(screenings: movie.screenings)
             }
             .padding(.bottom)
         }
@@ -90,6 +94,22 @@ struct FCMovieDetails: View {
     
     private var posterURL: URL? {
         URL(string: "https://image.tmdb.org/t/p/w500/\(details.posterPath)")
+    }
+}
+
+struct FCScreeningList: View {
+    let screenings: [FCScreening]
+    
+    var body: some View {
+        VStack {
+            ForEach(screenings) { screening in
+                HStack {
+                    Text(screening.theaterName)
+                    Spacer()
+                    FCFormattedDate(screening.time)
+                }
+            }
+        }
     }
 }
 
@@ -159,6 +179,6 @@ struct FCMovieDetailLinks: View {
 }
 
 #Preview {
-    FCMovieDetails(details: mockDetailsCS)
+    FCMovieDetails(movie: mockMovieCaughtStealing.toFCMovie(), details: mockDetailsCS)
         .frame(width: 400, height: 700)
 }

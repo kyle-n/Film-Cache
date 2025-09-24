@@ -61,7 +61,17 @@ struct MegaplexScheduledMovie: Codable, Identifiable, Equatable {
         formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss"
         let openingDate = formatter.date(from: self.openingDate) ?? FCMovie.blankDate
         let runTimeMinutes = Int(self.runTime) ?? 0
-        return FCMovie(id: self.id, title: self.title, openingDate: openingDate, runTimeMinutes: runTimeMinutes, distributor: self.distributor, theaterName: self.cinemaName)
+        return FCMovie(
+            id: self.id,
+            title: self.title,
+            openingDate: openingDate,
+            runTimeMinutes: runTimeMinutes,
+            distributor: self.distributor,
+            theaterName: self.cinemaName,
+            screenings: sessions.map { session in
+                FCScreening(theaterName: session.cinemaId, time: formatter.date(from: session.showtime) ?? FCMovie.blankDate)
+            }
+        )
     }
     
     static func == (lhs: MegaplexScheduledMovie, rhs: MegaplexScheduledMovie) -> Bool {
