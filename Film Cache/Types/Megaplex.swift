@@ -8,6 +8,7 @@
 import Foundation
 
 // MARK: - MegaplexScheduledMovie
+
 struct MegaplexScheduledMovie: Codable, Identifiable, Equatable {
     let id: String
     let scheduledFilmId: String
@@ -55,20 +56,20 @@ struct MegaplexScheduledMovie: Codable, Identifiable, Equatable {
     let genreId3: String?
     let genreIDs: [String?]
     let additionalUrls: AnyCodable?
-    
+
     func toFCMovie() -> FCMovie {
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss"
         let openingDate = formatter.date(from: self.openingDate) ?? FCMovie.blankDate
-        let runTimeMinutes = Int(self.runTime) ?? 0
+        let runTimeMinutes = Int(runTime) ?? 0
         return FCMovie(
-            id: self.id,
-            megaplexFilmId: self.scheduledFilmId,
-            title: self.title,
+            id: id,
+            megaplexFilmId: scheduledFilmId,
+            title: title,
             openingDate: openingDate,
             runTimeMinutes: runTimeMinutes,
-            distributor: self.distributor,
-            theaterName: self.cinemaName,
+            distributor: distributor,
+            theaterName: cinemaName,
             screenings: sessions.compactMap { session in
                 guard let theater = FCTheater(rawValue: session.cinemaId),
                       let time = formatter.date(from: session.showtime)
@@ -77,13 +78,14 @@ struct MegaplexScheduledMovie: Codable, Identifiable, Equatable {
             }
         )
     }
-    
+
     static func == (lhs: MegaplexScheduledMovie, rhs: MegaplexScheduledMovie) -> Bool {
         return lhs.id == rhs.id
     }
 }
 
 // MARK: - MegaplexSession
+
 struct MegaplexSession: Codable {
     let id: String
     let cinemaId: String
@@ -139,6 +141,7 @@ enum MegaplexTypeCode: String, Codable {
 }
 
 // MARK: - Placeholder Types
+
 // Replace with your actual MegaplexTime implementation
 typealias MegaplexTime = String
 

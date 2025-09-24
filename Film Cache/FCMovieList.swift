@@ -8,12 +8,11 @@
 import SwiftUI
 
 struct FCMovieList: View {
-    
     let movies: [FCMovie]
     @Binding var selectedMovieID: FCMovie.ID?
-    
+
     @State private var sortOrder: [KeyPathComparator<FCMovie>] = [KeyPathComparator(\FCMovie.openingDate)]
-    
+
     var body: some View {
         Table(sortedMovies, selection: $selectedMovieID, sortOrder: $sortOrder) {
             TableColumn("Title", value: \.title)
@@ -27,7 +26,7 @@ struct FCMovieList: View {
             TableColumn("Theater(s)", value: \.theaterName)
         }
     }
-    
+
     private var sortedMovies: [FCMovie] {
         return movies.sorted(using: sortOrder)
     }
@@ -38,6 +37,6 @@ struct FCMovieList: View {
         movies: [mockMovieCaughtStealing.toFCMovie()],
         selectedMovieID: .constant(nil)
     )
-        .frame(width: 700, height: 500)
-        .navigationTitle(APP_NAME)
+    .frame(width: 700, height: 500)
+    .navigationTitle(APP_NAME)
 }

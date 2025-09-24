@@ -8,6 +8,7 @@
 import Foundation
 
 // MARK: - TMDB Search Response
+
 struct TMDBSearchResponse: Codable {
     let page: Int64
     let results: [TMDBResult]
@@ -23,6 +24,7 @@ struct TMDBSearchResponse: Codable {
 }
 
 // MARK: - Result
+
 struct TMDBResult: Codable {
     let adult: Bool
     let backdropPath: String?
@@ -58,13 +60,15 @@ struct TMDBResult: Codable {
 }
 
 // MARK: - Original Language
+
 enum TMDBOriginalLanguage: String, Codable {
-    case de = "de"
-    case en = "en"
-    case ja = "ja"
+    case de
+    case en
+    case ja
 }
 
 // MARK: - TMDBMovieDetails
+
 struct TMDBMovieDetails: Codable {
     let adult: Bool
     let backdropPath: String
@@ -109,12 +113,14 @@ struct TMDBMovieDetails: Codable {
 }
 
 // MARK: - Genre
+
 struct Genre: Codable {
     let id: Int
     let name: String
 }
 
 // MARK: - ProductionCompany
+
 struct ProductionCompany: Codable {
     let id: Int
     let logoPath: String?
@@ -129,6 +135,7 @@ struct ProductionCompany: Codable {
 }
 
 // MARK: - ProductionCountry
+
 struct ProductionCountry: Codable {
     let iso3166_1, name: String
 
@@ -139,6 +146,7 @@ struct ProductionCountry: Codable {
 }
 
 // MARK: - SpokenLanguage
+
 struct SpokenLanguage: Codable {
     let englishName, iso639_1, name: String
 

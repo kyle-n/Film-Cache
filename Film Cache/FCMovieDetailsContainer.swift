@@ -1,5 +1,5 @@
 //
-//  FCMovieDetails.swift
+//  FCMovieDetailsContainer.swift
 //  Film Cache
 //
 //  Created by Kyle Nazario on 9/18/25.
@@ -9,9 +9,9 @@ import SwiftUI
 
 struct FCMovieDetailsContainer: View {
     let movie: FCMovie
-    
+
     @StateObject private var controller = FCMovieDetailsContainerController()
-    
+
     var body: some View {
         VStack(alignment: .leading) {
             if controller.loading {
@@ -32,15 +32,15 @@ struct FCMovieDetailsContainer: View {
     }
 }
 
-fileprivate final class FCMovieDetailsContainerController: ObservableObject {
+private final class FCMovieDetailsContainerController: ObservableObject {
     @Published private(set) var movieDetails: TMDBMovieDetails?
     @Published private(set) var loading = false
-    
+
     init() {}
-    
+
     func loadMovieDetails(forTitle title: String) {
-        self.loading = true
-        self.movieDetails = nil
+        loading = true
+        movieDetails = nil
         Task {
             let details = try await TMDBConnector.getMovie(byTitle: title)
             DispatchQueue.main.async {
@@ -54,9 +54,9 @@ fileprivate final class FCMovieDetailsContainerController: ObservableObject {
 struct FCMovieDetails: View {
     let movie: FCMovie
     let details: TMDBMovieDetails
-    
+
     private let iconLinkHeight: CGFloat = 30
-    
+
     var body: some View {
         ScrollView {
             VStack(alignment: .leading) {
@@ -93,7 +93,7 @@ struct FCMovieDetails: View {
             .padding(.horizontal)
         }
     }
-    
+
     private var posterURL: URL? {
         URL(string: "https://image.tmdb.org/t/p/w500/\(details.posterPath)")
     }
@@ -101,7 +101,7 @@ struct FCMovieDetails: View {
 
 struct FCScreeningList: View {
     let screenings: [FCScreening]
-    
+
     var body: some View {
         VStack {
             ForEach(FCTheater.allCases, id: \.self) { theater in
@@ -115,10 +115,10 @@ struct FCScreeningList: View {
             }
         }
     }
-    
-    private var screeningsByTheater: Dictionary<FCTheater, [FCScreening]> {
-        var groupedScreenings = Dictionary<FCTheater, [FCScreening]>()
-        screenings.forEach { screening in
+
+    private var screeningsByTheater: [FCTheater: [FCScreening]] {
+        var groupedScreenings = [FCTheater: [FCScreening]]()
+        for screening in screenings {
             var screeningsForTheater = groupedScreenings[screening.theater] ?? []
             screeningsForTheater.append(screening)
             groupedScreenings[screening.theater] = screeningsForTheater
@@ -129,7 +129,7 @@ struct FCScreeningList: View {
 
 struct FCScreeningTimeList: View {
     let screenings: [FCScreening]
-    
+
     var body: some View {
         Table(screenings) {
             TableColumn("Date") { screening in
@@ -144,7 +144,7 @@ struct FCScreeningTimeList: View {
         .frame(height: 24 * CGFloat(screenings.count) + 6)
         .scrollDisabled(true)
     }
-    
+
     private static func getFormattedTime(forScreening screening: FCScreening) -> String {
         let formatter = DateFormatter()
         formatter.dateFormat = "h:mm a"
@@ -154,7 +154,7 @@ struct FCScreeningTimeList: View {
 
 struct FCMovieDetailList: View {
     let details: TMDBMovieDetails
-    
+
     var body: some View {
         if let releaseDate {
             HStack {
@@ -177,13 +177,13 @@ struct FCMovieDetailList: View {
             Text(genreList)
         }
     }
-    
+
     private var releaseDate: Date? {
         let formatter = DateFormatter()
         formatter.dateFormat = "YYYY-MM-dd"
         return formatter.date(from: details.releaseDate)
     }
-    
+
     private var genreList: String {
         details.genres
             .map { $0.name }
@@ -194,7 +194,7 @@ struct FCMovieDetailList: View {
 struct FCMovieDetailLinks: View {
     let tmdbID: Int
     let imdbID: String
-    
+
     var body: some View {
         HStack {
             ForEach(links, id: \.name) { link in
@@ -204,7 +204,7 @@ struct FCMovieDetailLinks: View {
             }
         }
     }
-    
+
     private var links: [(name: String, url: URL)] {
         [
             (name: "IMDB", url: URL(string: "https://www.imdb.com/title/\(imdbID)")),

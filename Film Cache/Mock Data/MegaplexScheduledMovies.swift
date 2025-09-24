@@ -32,8 +32,16 @@ let mockMovieCaughtStealing = MegaplexScheduledMovie(
             formatCode: "vs00000001",
             formatHOPK: "vs00000001",
             salesChannels: ";ATMOB;IVR;CALL;FAND;FANDM;GSALE;MXHW;WWW;KIOSK;CELL;PDA;MTINT;MTMOB;MXATM;MXFD;MXS;MXTV;POSBK;POS;RSP;SKI;",
-            sessionAttributesNames: [MegaplexAttributesName.the2D, MegaplexAttributesName.cc, MegaplexAttributesName.dvs],
-            conceptAttributesNames: [MegaplexAttributesName.the2D, MegaplexAttributesName.cc, MegaplexAttributesName.dvs],
+            sessionAttributesNames: [
+                MegaplexAttributesName.the2D,
+                MegaplexAttributesName.cc,
+                MegaplexAttributesName.dvs
+            ],
+            conceptAttributesNames: [
+                MegaplexAttributesName.the2D,
+                MegaplexAttributesName.cc,
+                MegaplexAttributesName.dvs
+            ],
             allowTicketSales: true,
             hasDynamicallyPricedTicketsAvailable: false,
             playThroughId: nil,
@@ -43,7 +51,7 @@ let mockMovieCaughtStealing = MegaplexScheduledMovie(
             soldoutStatus: 0,
             typeCode: MegaplexTypeCode.n,
             sponsoredAuditoriumImageUrl: nil
-        ),
+        )
         // ...repeat for the other Session objects using their respective values...
     ],
     sessionCount: 0,

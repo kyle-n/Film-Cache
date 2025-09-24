@@ -8,10 +8,9 @@
 import SwiftUI
 
 struct ContentView: View {
-    
     @StateObject() private var controller = ContentViewController()
     @State private var selectedMovieID: FCMovie.ID?
-    
+
     var body: some View {
         Group {
             if controller.loading {
@@ -27,7 +26,7 @@ struct ContentView: View {
 struct FCListDetailsSplitPane: View {
     let movies: [FCMovie]
     @Binding var selectedMovieID: FCMovie.ID?
-    
+
     var body: some View {
         GeometryReader { geo in
             HSplitView {
@@ -39,7 +38,7 @@ struct FCListDetailsSplitPane: View {
             }
         }
     }
-    
+
     private var selectedMovie: FCMovie? {
         movies.first { $0.id == selectedMovieID }
     }
