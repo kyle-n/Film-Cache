@@ -111,12 +111,7 @@ struct FCScreeningList: View {
                         .font(.title3)
                         .bold()
                         .padding(.vertical)
-                    ForEach(screeningsForTheater) { screening in
-                        HStack {
-                            FCFormattedDate(screening.time, displayTime: true)
-                            Spacer()
-                        }
-                    }
+                    FCScreeningTimeList(screenings: screeningsForTheater)
                 }
             }
         }
@@ -130,6 +125,29 @@ struct FCScreeningList: View {
             groupedScreenings[screening.theater] = screeningsForTheater
         }
         return groupedScreenings
+    }
+}
+
+struct FCScreeningTimeList: View {
+    let screenings: [FCScreening]
+    
+    var body: some View {
+        Table(screenings) {
+            TableColumn("Date") { screening in
+                FCFormattedDate(screening.time)
+            }
+            TableColumn("Time") { screening in
+                Text(FCScreeningTimeList.getFormattedTime(forScreening: screening))
+            }
+        }
+        .frame(minHeight: 18 + (23 * CGFloat(screenings.count + 1)))
+        .scrollDisabled(true)
+    }
+    
+    private static func getFormattedTime(forScreening screening: FCScreening) -> String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "h:mm a"
+        return formatter.string(from: screening.time)
     }
 }
 
