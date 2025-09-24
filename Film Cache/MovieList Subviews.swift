@@ -9,9 +9,11 @@ import SwiftUI
 
 struct FCFormattedDate: View {
     private let date: Date
+    private let displayTime: Bool
     
-    init(_ date: Date) {
+    init(_ date: Date, displayTime: Bool = false) {
         self.date = date
+        self.displayTime = displayTime
     }
     
     var body: some View {
@@ -20,14 +22,18 @@ struct FCFormattedDate: View {
     
     private var formattedDate: String {
         guard date.timeIntervalSince1970 != FCMovie.blankDate.timeIntervalSince1970 else { return "" }
-        return FCFormattedDate.outputDateFormatter.string(from: date)
+        return outputDateFormatter.string(from: date)
     }
     
-    private static let outputDateFormatter = {
+    private var outputDateFormatter: DateFormatter {
         let formatter = DateFormatter()
-        formatter.dateFormat = "E, MMM. d"
+        if displayTime {
+            formatter.dateFormat = "E, MMM. d 'at' h:mm a"
+        } else {
+            formatter.dateFormat = "E, MMM. d"
+        }
         return formatter
-    }()
+    }
 }
 
 struct FCFormattedRunTime: View {
@@ -51,7 +57,8 @@ struct FCFormattedRunTime: View {
 #Preview {
     VStack {
         FCFormattedDate(Date(timeIntervalSince1970: 10000))
-            .padding(.bottom)
+        FCFormattedDate(Date(timeIntervalSince1970: 10000), displayTime: true)
+            .padding(.vertical)
         FCFormattedRunTime(100)
     }
     .padding()

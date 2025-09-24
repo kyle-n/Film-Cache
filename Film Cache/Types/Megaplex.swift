@@ -68,8 +68,11 @@ struct MegaplexScheduledMovie: Codable, Identifiable, Equatable {
             runTimeMinutes: runTimeMinutes,
             distributor: self.distributor,
             theaterName: self.cinemaName,
-            screenings: sessions.map { session in
-                FCScreening(theaterName: session.cinemaId, time: formatter.date(from: session.showtime) ?? FCMovie.blankDate)
+            screenings: sessions.compactMap { session in
+                guard let theater = FCTheater(rawValue: session.cinemaId),
+                      let time = formatter.date(from: session.showtime)
+                else { return nil }
+                return FCScreening(theater: theater, time: time)
             }
         )
     }

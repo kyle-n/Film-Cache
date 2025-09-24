@@ -104,7 +104,7 @@ struct FCScreeningList: View {
         VStack {
             ForEach(screenings) { screening in
                 HStack {
-                    Text(screening.theaterName)
+                    Text(screening.theater.formattedName)
                     Spacer()
                     FCFormattedDate(screening.time)
                 }

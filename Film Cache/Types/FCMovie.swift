@@ -21,8 +21,23 @@ struct FCMovie: Identifiable {
 
 struct FCScreening: Identifiable {
     var id: String {
-        theaterName + time.ISO8601Format()
+        theater.rawValue + " " + time.ISO8601Format()
     }
-    let theaterName: String
+    let theater: FCTheater
     let time: Date
+}
+
+enum FCTheater: String, CaseIterable {
+    // Megaplex cases use their internal IDs
+    case MegaplexProvidence = "0010"
+    case UtahTheater
+    
+    var formattedName: String {
+        switch (self) {
+        case .MegaplexProvidence:
+            return "Megaplex Providence"
+        case .UtahTheater:
+            return "The Utah Theater"
+        }
+    }
 }
