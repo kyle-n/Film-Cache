@@ -58,22 +58,12 @@ struct FCMovieDetails: View {
     
     var body: some View {
         ScrollView {
-            
             VStack(alignment: .leading) {
                 Text(details.title)
                     .font(.largeTitle)
                     .bold()
                     .padding(.top)
                 HStack {
-//                    Link(destination: URL(string: "https://www.imdb.com/title/\(details.imdbID)")!) {
-//                        Button("IMDB", action: {})
-//                    }
-//                    Link(destination: URL(string: "https://www.themoviedb.org/movie/\(details.id)")!) {
-//                        Button("The Movie DB", action: {})
-//                    }
-//                    Link(destination: URL(string: "https://letterboxd.com/imdb/\(details.imdbID)")!) {
-//                        Button("Letterboxd", action: {})
-//                    }
                     FCMovieDetailLinks(tmdbID: details.id, imdbID: details.imdbID)
                     Spacer()
                 }
@@ -91,21 +81,9 @@ struct FCMovieDetails: View {
                 Text(details.overview)
                 Divider()
                     .padding(.vertical)
-                if let releaseDate {
-                    HStack {
-                        Text("Release Date")
-                            .bold()
-                        Spacer()
-                        FCFormattedDate(releaseDate)
-                    }
-                }
-                HStack {
-                    Text("Runtime")
-                        .bold()
-                    Spacer()
-                    FCFormattedRunTime(details.runtime)
-                }
+                FCMovieDetailList(details: details)
             }
+            .padding(.bottom)
         }
         .padding(.horizontal)
     }
@@ -113,10 +91,44 @@ struct FCMovieDetails: View {
     private var posterURL: URL? {
         URL(string: "https://image.tmdb.org/t/p/w500/\(details.posterPath)")
     }
+}
+
+struct FCMovieDetailList: View {
+    let details: TMDBMovieDetails
+    
+    var body: some View {
+        if let releaseDate {
+            HStack {
+                Text("Release Date")
+                    .bold()
+                Spacer()
+                FCFormattedDate(releaseDate)
+            }
+        }
+        HStack {
+            Text("Runtime")
+                .bold()
+            Spacer()
+            FCFormattedRunTime(details.runtime)
+        }
+        HStack {
+            Text("Genre(s)")
+                .bold()
+            Spacer()
+            Text(genreList)
+        }
+    }
+    
     private var releaseDate: Date? {
         let formatter = DateFormatter()
         formatter.dateFormat = "YYYY-MM-dd"
         return formatter.date(from: details.releaseDate)
+    }
+    
+    private var genreList: String {
+        details.genres
+            .map { $0.name }
+            .joined(separator: ", ")
     }
 }
 
