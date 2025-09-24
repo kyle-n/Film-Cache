@@ -91,8 +91,8 @@ struct FCMovieDetails: View {
                 FCScreeningList(screenings: movie.screenings)
             }
             .padding(.bottom)
+            .padding(.horizontal)
         }
-        .padding(.horizontal)
     }
     
     private var posterURL: URL? {
@@ -136,11 +136,13 @@ struct FCScreeningTimeList: View {
             TableColumn("Date") { screening in
                 FCFormattedDate(screening.time)
             }
+            .width(100)
             TableColumn("Time") { screening in
                 Text(FCScreeningTimeList.getFormattedTime(forScreening: screening))
             }
         }
-        .frame(minHeight: 18 + (23 * CGFloat(screenings.count + 1)))
+        .tableColumnHeaders(.hidden)
+        .frame(height: 24 * CGFloat(screenings.count) + 6)
         .scrollDisabled(true)
     }
     
