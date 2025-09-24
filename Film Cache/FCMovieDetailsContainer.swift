@@ -65,26 +65,16 @@ struct FCMovieDetails: View {
                     .bold()
                     .padding(.top)
                 HStack {
-                    Link(destination: URL(string: "https://www.imdb.com/title/\(details.imdbID)")!) {
-                        Image("IMDBIcon")
-                            .resizable()
-                            .renderingMode(.template)
-                            .frame(maxWidth: 60, maxHeight: iconLinkHeight)
-                            .scaledToFit()
-                    }
-                    .padding(.trailing)
-                    .foregroundStyle(Color.yellow)
-                    Link(destination: URL(string: "https://www.themoviedb.org/movie/\(details.id)")!) {
-                        Image("TMDBIcon")
-                            .resizable()
-                            .frame(maxWidth: 35, maxHeight: iconLinkHeight)
-                    }
-                    .padding(.trailing)
-                    Link(destination: URL(string: "https://letterboxd.com/imdb/\(details.imdbID)")!) {
-                        Image("LetterboxdLogo")
-                            .resizable()
-                            .frame(maxWidth: iconLinkHeight, maxHeight: iconLinkHeight)
-                    }
+//                    Link(destination: URL(string: "https://www.imdb.com/title/\(details.imdbID)")!) {
+//                        Button("IMDB", action: {})
+//                    }
+//                    Link(destination: URL(string: "https://www.themoviedb.org/movie/\(details.id)")!) {
+//                        Button("The Movie DB", action: {})
+//                    }
+//                    Link(destination: URL(string: "https://letterboxd.com/imdb/\(details.imdbID)")!) {
+//                        Button("Letterboxd", action: {})
+//                    }
+                    FCMovieDetailLinks(tmdbID: details.id, imdbID: details.imdbID)
                     Spacer()
                 }
                 if let posterURL {
@@ -130,7 +120,33 @@ struct FCMovieDetails: View {
     }
 }
 
+struct FCMovieDetailLinks: View {
+    let tmdbID: Int
+    let imdbID: String
+    
+    var body: some View {
+        HStack {
+            ForEach(links, id: \.name) { link in
+                Button(link.name) {
+                    NSWorkspace.shared.open(link.url)
+                }
+            }
+        }
+    }
+    
+    private var links: [(name: String, url: URL)] {
+        [
+            (name: "IMDB", url: URL(string: "https://www.imdb.com/title/\(imdbID)")),
+            (name: "Letterboxd", url: URL(string: "https://letterboxd.com/imdb/\(imdbID)")),
+            (name: "The Movie DB", url: URL(string: "https://www.themoviedb.org/movie/\(tmdbID)"))
+        ].compactMap { (name: String, url: URL?) in
+            guard let url else { return nil }
+            return (name: name, url: url)
+        }
+    }
+}
+
 #Preview {
     FCMovieDetails(details: mockDetailsCS)
-        .frame(width: 300, height: 700)
+        .frame(width: 400, height: 700)
 }
