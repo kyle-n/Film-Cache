@@ -15,7 +15,7 @@ struct FCMovieDetailsContainer: View {
     var body: some View {
         VStack(alignment: .leading) {
             if controller.loading {
-                ProgressView()
+                fullPanelLoader
             }
             if let movieDetails = controller.movieDetails {
                 FCMovieDetails(movie: movie, details: movieDetails)
@@ -28,6 +28,18 @@ struct FCMovieDetailsContainer: View {
         }
         .onChange(of: movie.title) { _, newMovieTitle in
             controller.loadMovieDetails(forTitle: newMovieTitle)
+        }
+    }
+    
+    private var fullPanelLoader: some View {
+        HStack {
+            Spacer()
+            VStack {
+                Spacer()
+                ProgressView()
+                Spacer()
+            }
+            Spacer()
         }
     }
 }
