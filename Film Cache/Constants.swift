@@ -6,3 +6,4 @@
 //
 
 let APP_NAME = "Film Cache"
+let BUNDLE_IDENTIFIER = "com.kylenazario.Film-Cache"

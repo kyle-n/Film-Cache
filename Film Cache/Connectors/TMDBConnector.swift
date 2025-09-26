@@ -8,14 +8,13 @@
 import Foundation
 
 enum TMDBConnector {
-    static func searchMovies(title: String) async throws -> [TMDBResult] {
+    static func searchMovies(title: String, year: Int) async throws -> [TMDBResult] {
         var url = URL(string: "https://api.themoviedb.org/3/search/movie")!
 
-        let currentYear = Calendar.current.component(.year, from: Date())
         url.append(queryItems: [
             URLQueryItem(name: "query", value: title),
             URLQueryItem(name: "include_adult", value: "false"),
-            URLQueryItem(name: "primary_release_year", value: String(currentYear))
+            URLQueryItem(name: "primary_release_year", value: String(year))
         ])
 
         var request = URLRequest(url: url)
@@ -40,8 +39,8 @@ enum TMDBConnector {
         return try JSONDecoder().decode(TMDBMovieDetails.self, from: response.0)
     }
 
-    static func getMovie(byTitle title: String) async throws -> TMDBMovieDetails {
-        let searchResults = try await searchMovies(title: title)
+    static func getMovie(byTitle title: String, year: Int) async throws -> TMDBMovieDetails {
+        let searchResults = try await searchMovies(title: title, year: year)
         guard let result = searchResults.first else {
             throw NSError(domain: "No movies returned from title search", code: 404)
         }

@@ -30,7 +30,7 @@ struct TMDBResult: Codable {
     let backdropPath: String?
     let genreIDs: [Int64]
     let id: Int64
-    let originalLanguage: TMDBOriginalLanguage
+    let originalLanguage: String
     let originalTitle: String
     let overview: String
     let popularity: Double
@@ -57,14 +57,6 @@ struct TMDBResult: Codable {
         case voteAverage = "vote_average"
         case voteCount = "vote_count"
     }
-}
-
-// MARK: - Original Language
-
-enum TMDBOriginalLanguage: String, Codable {
-    case de
-    case en
-    case ja
 }
 
 // MARK: - TMDBMovieDetails

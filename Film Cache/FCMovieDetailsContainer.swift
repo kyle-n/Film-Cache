@@ -23,12 +23,15 @@ struct FCMovieDetailsContainer: View {
             Spacer()
         }
         .frame(maxWidth: .infinity, alignment: .leading)
-        .onAppear {
-            controller.loadMovieDetails(forTitle: movie.title)
+        .onAppear(perform: triggerMovieDetailsLoad)
+        .onChange(of: movie.title) { _, _ in
+            triggerMovieDetailsLoad()
         }
-        .onChange(of: movie.title) { _, newMovieTitle in
-            controller.loadMovieDetails(forTitle: newMovieTitle)
-        }
+    }
+    
+    private func triggerMovieDetailsLoad() {
+        let year = Calendar.current.component(.year, from: movie.openingDate)
+        controller.loadMovieDetails(for: movie.title, year: year)
     }
     
     private var fullPanelLoader: some View {
@@ -50,13 +53,19 @@ private final class FCMovieDetailsContainerController: ObservableObject {
 
     init() {}
 
-    func loadMovieDetails(forTitle title: String) {
+    func loadMovieDetails(for title: String, year: Int) {
         loading = true
         movieDetails = nil
         Task {
-            let details = try await TMDBConnector.getMovie(byTitle: title)
-            DispatchQueue.main.async {
-                self.movieDetails = details
+            do {
+                let details = try await TMDBConnector.getMovie(byTitle: title, year: year)
+                DispatchQueue.main.async {
+                    self.movieDetails = details
+                    self.loading = false
+                }
+            } catch {
+                print(error)
+                FCError.display(error: .couldNotLoadFilmDetails)
                 self.loading = false
             }
         }
