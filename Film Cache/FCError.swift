@@ -9,7 +9,7 @@ import AppKit
 enum FCError: Int {
     static func display(error: Error, type: FCError) {
         var description: String
-        switch (type) {
+        switch type {
         case .couldNotLoadFilmDetails:
             description = "Could not load movie details from The Movie DB"
         case .couldNotLoadFilms:
@@ -25,7 +25,7 @@ enum FCError: Int {
             alert.runModal()
         }
     }
-    
+
     case couldNotLoadFilmDetails
     case couldNotLoadFilms
 }

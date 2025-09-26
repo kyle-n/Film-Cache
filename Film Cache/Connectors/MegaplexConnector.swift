@@ -22,7 +22,7 @@ enum MegaplexConnector {
         }
         return movies
     }
-    
+
     // Megaplex adds to titles of their rep screenings
     static func getNormalizedTitle(for title: String) -> (String, Bool) {
         let currentYear = Calendar.current.component(.year, from: Date())
@@ -31,21 +31,21 @@ enum MegaplexConnector {
             "(Re-release)",
             "(Fathom \(currentYear))",
             "(Fathom \(currentYear - 1)",
-            "(Fathom \(currentYear + 1)",
+            "(Fathom \(currentYear + 1)"
         ]
         var isRepScreening = false
-        repScreeningIndicators.forEach { indicator in
+        for indicator in repScreeningIndicators {
             if title.contains(indicator) {
                 isRepScreening = true
             }
         }
-        
+
         let deletables = repScreeningIndicators + [
             "-Dub",
             "-Sub"
         ]
         var normalizedTitle = title
-        deletables.forEach { deletable in
+        for deletable in deletables {
             normalizedTitle = normalizedTitle.replacingOccurrences(of: deletable, with: "")
         }
         normalizedTitle = normalizedTitle.trimmingCharacters(in: .whitespacesAndNewlines)

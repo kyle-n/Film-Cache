@@ -10,12 +10,12 @@ import Foundation
 enum TMDBConnector {
     static func searchMovies(title: String, year: Int) async throws -> [TMDBResult] {
         var url = URL(string: "https://api.themoviedb.org/3/search/movie")!
-        
+
         let (normalizedTitle, isRepScreening) = MegaplexConnector.getNormalizedTitle(for: title)
-        
+
         url.append(queryItems: [
             URLQueryItem(name: "query", value: normalizedTitle),
-            URLQueryItem(name: "include_adult", value: "false"),
+            URLQueryItem(name: "include_adult", value: "false")
         ])
         if !isRepScreening {
             url.append(queryItems: [

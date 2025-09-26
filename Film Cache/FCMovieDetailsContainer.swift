@@ -28,12 +28,12 @@ struct FCMovieDetailsContainer: View {
             triggerMovieDetailsLoad()
         }
     }
-    
+
     private func triggerMovieDetailsLoad() {
         let year = Calendar.current.component(.year, from: movie.openingDate)
         controller.loadMovieDetails(for: movie.title, year: year)
     }
-    
+
     private var fullPanelLoader: some View {
         HStack {
             Spacer()
@@ -66,7 +66,7 @@ private final class FCMovieDetailsContainerController: ObservableObject {
             } catch {
                 print(error)
                 FCError.display(error: error, type: .couldNotLoadFilmDetails)
-                DispatchQueue.main.async {                
+                DispatchQueue.main.async {
                     self.loading = false
                 }
             }
