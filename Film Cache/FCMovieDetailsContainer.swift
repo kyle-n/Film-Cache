@@ -65,8 +65,10 @@ private final class FCMovieDetailsContainerController: ObservableObject {
                 }
             } catch {
                 print(error)
-                FCError.display(error: .couldNotLoadFilmDetails)
-                self.loading = false
+                FCError.display(error: error, type: .couldNotLoadFilmDetails)
+                DispatchQueue.main.async {                
+                    self.loading = false
+                }
             }
         }
     }

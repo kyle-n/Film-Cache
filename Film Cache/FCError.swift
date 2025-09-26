@@ -7,21 +7,25 @@
 import AppKit
 
 enum FCError: Int {
-    static func display(error: FCError) {
+    static func display(error: Error, type: FCError) {
         var description: String
-        switch (error) {
+        switch (type) {
         case .couldNotLoadFilmDetails:
             description = "Could not load movie details from The Movie DB"
+        case .couldNotLoadFilms:
+            description = "Could not load movies"
         }
-        let error = NSError(domain: BUNDLE_IDENTIFIER, code: error.rawValue, userInfo: [
-            NSLocalizedDescriptionKey: description
+        let nsError = NSError(domain: BUNDLE_IDENTIFIER, code: type.rawValue, userInfo: [
+            NSLocalizedDescriptionKey: description,
+            NSLocalizedFailureReasonErrorKey: error.localizedDescription
         ])
         DispatchQueue.main.async {        
-            let alert = NSAlert(error: error)
+            let alert = NSAlert(error: nsError)
             alert.alertStyle = .warning
             alert.runModal()
         }
     }
     
     case couldNotLoadFilmDetails
+    case couldNotLoadFilms
 }

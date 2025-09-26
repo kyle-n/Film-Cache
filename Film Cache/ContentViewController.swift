@@ -21,14 +21,22 @@ final class ContentViewController: ObservableObject {
         loading = true
         movies = []
         Task {
-            let providenceMovies = try await MegaplexConnector
-                .getScheduledMovies(forTheaterId: FCTheater.MegaplexProvidence.rawValue).map { $0.toFCMovie() }
-            let universityMovies = try await MegaplexConnector
-                .getScheduledMovies(forTheaterId: FCTheater.MegaplexUniversity.rawValue).map { $0.toFCMovie() }
-            let megaplexMovies = providenceMovies.merged(with: universityMovies)
-            DispatchQueue.main.async {
-                self.movies = megaplexMovies
-                self.loading = false
+            do {
+                let providenceMovies = try await MegaplexConnector
+                    .getScheduledMovies(forTheaterId: FCTheater.MegaplexProvidence.rawValue).map { $0.toFCMovie() }
+                let universityMovies = try await MegaplexConnector
+                    .getScheduledMovies(forTheaterId: FCTheater.MegaplexUniversity.rawValue).map { $0.toFCMovie() }
+                let megaplexMovies = providenceMovies.merged(with: universityMovies)
+                DispatchQueue.main.async {
+                    self.movies = megaplexMovies
+                    self.loading = false
+                }
+            } catch {
+                print(error)
+                FCError.display(error: error, type: .couldNotLoadFilms)
+                DispatchQueue.main.async {
+                    self.loading = false
+                }
             }
         }
     }
