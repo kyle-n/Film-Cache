@@ -11,32 +11,10 @@ enum TMDBConnector {
     static func searchMovies(title: String, year: Int) async throws -> [TMDBResult] {
         var url = URL(string: "https://api.themoviedb.org/3/search/movie")!
         
-        // Megaplex puts "MegaReelDeal" in titles of rep screenings
-        let currentYear = Calendar.current.component(.year, from: Date())
-        let repScreeningIndicators = [
-            "MegaReelDeal",
-            "(Re-release)",
-            "(Fathom \(currentYear))"
-        ]
-        var isRepScreening = false
-        repScreeningIndicators.forEach { indicator in
-            if title.contains(indicator) {
-                isRepScreening = true
-            }
-        }
+        let (normalizedTitle, isRepScreening) = MegaplexConnector.getNormalizedTitle(for: title)
         
-        let deletables = repScreeningIndicators + [
-            "-Dub",
-            "-Sub"
-        ]
-        var simplifiedTitle = title
-        deletables.forEach { deletable in
-            simplifiedTitle = simplifiedTitle.replacingOccurrences(of: deletable, with: "")
-        }
-        simplifiedTitle = simplifiedTitle.trimmingCharacters(in: .whitespacesAndNewlines)
-
         url.append(queryItems: [
-            URLQueryItem(name: "query", value: simplifiedTitle),
+            URLQueryItem(name: "query", value: normalizedTitle),
             URLQueryItem(name: "include_adult", value: "false"),
         ])
         if !isRepScreening {
