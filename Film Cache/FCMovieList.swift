@@ -12,17 +12,22 @@ struct FCMovieList: View {
     @Binding var selectedMovieID: FCMovie.ID?
 
     @State private var sortOrder: [KeyPathComparator<FCMovie>] = [KeyPathComparator(\FCMovie.openingDate)]
+    private let narrowColWidth: CGFloat = 60
 
     var body: some View {
         Table(sortedMovies, selection: $selectedMovieID, sortOrder: $sortOrder) {
             TableColumn("Title", value: \.title)
+                .width(ideal: 150)
             TableColumn("Opening", value: \.openingDate) { movie in
                 FCFormattedDate(movie.openingDate)
             }
+            .width(ideal: narrowColWidth)
             TableColumn("Runtime", value: \.runTimeMinutes) { movie in
                 FCFormattedRunTime(movie.runTimeMinutes)
             }
+            .width(ideal: narrowColWidth)
             TableColumn("Distributor", value: \.distributor)
+                .width(ideal: narrowColWidth)
             TableColumn("Theater(s)", value: \.theaterName)
         }
     }
