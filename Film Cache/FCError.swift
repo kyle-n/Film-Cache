@@ -17,9 +17,9 @@ enum FCError: Int {
         }
         let nsError = NSError(domain: BUNDLE_IDENTIFIER, code: type.rawValue, userInfo: [
             NSLocalizedDescriptionKey: description,
-            NSLocalizedFailureReasonErrorKey: error.localizedDescription
+            NSLocalizedRecoverySuggestionErrorKey: error.localizedDescription
         ])
-        DispatchQueue.main.async {        
+        DispatchQueue.main.async {
             let alert = NSAlert(error: nsError)
             alert.alertStyle = .warning
             alert.runModal()
