@@ -10,12 +10,21 @@ import Foundation
 enum TMDBConnector {
     static func searchMovies(title: String, year: Int) async throws -> [TMDBResult] {
         var url = URL(string: "https://api.themoviedb.org/3/search/movie")!
+        
+        // Megaplex puts "MegaReelDeal" in titles of rep screenings
+        let mrdName = "MegaReelDeal"
+        let isMegaReelDeal = title.contains(mrdName)
+        let simplifiedTitle = title.replacingOccurrences(of: mrdName, with: "").trimmingCharacters(in: .whitespacesAndNewlines)
 
         url.append(queryItems: [
-            URLQueryItem(name: "query", value: title),
+            URLQueryItem(name: "query", value: simplifiedTitle),
             URLQueryItem(name: "include_adult", value: "false"),
-            URLQueryItem(name: "primary_release_year", value: String(year))
         ])
+        if !isMegaReelDeal {
+            url.append(queryItems: [
+                URLQueryItem(name: "primary_release_year", value: String(year))
+            ])
+        }
 
         var request = URLRequest(url: url)
         request.setValue("Bearer " + TMDB_API_READ_TOKEN, forHTTPHeaderField: "Authorization")
