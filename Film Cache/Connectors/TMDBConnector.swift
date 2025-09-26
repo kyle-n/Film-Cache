@@ -12,15 +12,34 @@ enum TMDBConnector {
         var url = URL(string: "https://api.themoviedb.org/3/search/movie")!
         
         // Megaplex puts "MegaReelDeal" in titles of rep screenings
-        let mrdName = "MegaReelDeal"
-        let isMegaReelDeal = title.contains(mrdName)
-        let simplifiedTitle = title.replacingOccurrences(of: mrdName, with: "").trimmingCharacters(in: .whitespacesAndNewlines)
+        let currentYear = Calendar.current.component(.year, from: Date())
+        let repScreeningIndicators = [
+            "MegaReelDeal",
+            "(Re-release)",
+            "(Fathom \(currentYear))"
+        ]
+        var isRepScreening = false
+        repScreeningIndicators.forEach { indicator in
+            if title.contains(indicator) {
+                isRepScreening = true
+            }
+        }
+        
+        let deletables = repScreeningIndicators + [
+            "-Dub",
+            "-Sub"
+        ]
+        var simplifiedTitle = title
+        deletables.forEach { deletable in
+            simplifiedTitle = simplifiedTitle.replacingOccurrences(of: deletable, with: "")
+        }
+        simplifiedTitle = simplifiedTitle.trimmingCharacters(in: .whitespacesAndNewlines)
 
         url.append(queryItems: [
             URLQueryItem(name: "query", value: simplifiedTitle),
             URLQueryItem(name: "include_adult", value: "false"),
         ])
-        if !isMegaReelDeal {
+        if !isRepScreening {
             url.append(queryItems: [
                 URLQueryItem(name: "primary_release_year", value: String(year))
             ])
