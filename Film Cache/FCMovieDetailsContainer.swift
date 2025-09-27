@@ -133,8 +133,41 @@ struct FCScreeningList: View {
                         .font(.title3)
                         .bold()
                         .padding(.vertical)
-                    FCScreeningTimeList(screenings: screeningsForTheater)
+                    
+                    getScreeningsByDay(theaterScreenings: screeningsForTheater)
                 }
+            }
+        }
+    }
+    
+    private func getScreeningsByDay(theaterScreenings: [FCScreening]) -> some View {
+        let screeningsByDay = FCScreeningList.getTheaterScreeningsByDay(screenings: theaterScreenings)
+        return VStack {
+            Text("Today")
+                .font(.subheadline)
+                .bold()
+            if !screeningsByDay.today.isEmpty {
+                FCScreeningTimeList(screenings: screeningsByDay.today)
+            } else {
+                Text("No screenings today.")
+            }
+            Text("Tomorrow")
+                .font(.subheadline)
+                .bold()
+                .padding(.top)
+            if !screeningsByDay.tomorrow.isEmpty {
+                FCScreeningTimeList(screenings: screeningsByDay.tomorrow)
+            } else {
+                Text("No screenings tomorrow.")
+            }
+            Text("Other")
+                .font(.subheadline)
+                .bold()
+                .padding(.top)
+            if !screeningsByDay.others.isEmpty {
+                FCScreeningTimeList(screenings: screeningsByDay.others)
+            } else {
+                Text("No other screenings.")
             }
         }
     }
@@ -147,6 +180,31 @@ struct FCScreeningList: View {
             groupedScreenings[screening.theater] = screeningsForTheater
         }
         return groupedScreenings
+    }
+    
+    private static func getTheaterScreeningsByDay(screenings: [FCScreening]) -> FCScreeningsByDay {
+        let now = Date()
+        var today: [FCScreening] = []
+        var tomorrow: [FCScreening] = []
+        var others: [FCScreening] = []
+        for screening in screenings {
+            if Calendar.current.isDateInToday(screening.time) {
+                today.append(screening)
+            }
+            else if Calendar.current.isDateInTomorrow(screening.time) {
+                tomorrow.append(screening)
+            }
+            else {
+                others.append(screening)
+            }
+        }
+        return FCScreeningsByDay(today: today, tomorrow: tomorrow, others: others)
+    }
+    
+    private struct FCScreeningsByDay {
+        let today: [FCScreening]
+        let tomorrow: [FCScreening]
+        let others: [FCScreening]
     }
 }
 
