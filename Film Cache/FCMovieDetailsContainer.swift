@@ -143,31 +143,29 @@ struct FCScreeningList: View {
     private func getScreeningsByDay(theaterScreenings: [FCScreening]) -> some View {
         let screeningsByDay = FCScreeningList.getTheaterScreeningsByDay(screenings: theaterScreenings)
         return VStack {
-            Text("Today")
-                .font(.subheadline)
-                .bold()
             if !screeningsByDay.today.isEmpty {
-                FCScreeningTimeList(screenings: screeningsByDay.today)
+                FCScreeningTimeList(name: "Today", screenings: screeningsByDay.today)
             } else {
-                Text("No screenings today.")
+                HStack {
+                    Text("No screenings today.")
+                    Spacer()
+                }
             }
-            Text("Tomorrow")
-                .font(.subheadline)
-                .bold()
-                .padding(.top)
             if !screeningsByDay.tomorrow.isEmpty {
-                FCScreeningTimeList(screenings: screeningsByDay.tomorrow)
+                FCScreeningTimeList(name: "Tomorrow", screenings: screeningsByDay.tomorrow)
             } else {
-                Text("No screenings tomorrow.")
+                HStack {
+                    Text("No screenings tomorrow.")
+                    Spacer()
+                }
             }
-            Text("Other")
-                .font(.subheadline)
-                .bold()
-                .padding(.top)
             if !screeningsByDay.others.isEmpty {
-                FCScreeningTimeList(screenings: screeningsByDay.others)
+                FCScreeningTimeList(name: "Other", screenings: screeningsByDay.others)
             } else {
-                Text("No other screenings.")
+                HStack {
+                    Text("No other screenings.")
+                    Spacer()
+                }
             }
         }
     }
@@ -209,21 +207,29 @@ struct FCScreeningList: View {
 }
 
 struct FCScreeningTimeList: View {
+    let name: String
     let screenings: [FCScreening]
+    
+    @State private var expanded = true
 
     var body: some View {
-        Table(screenings) {
-            TableColumn("Date") { screening in
-                FCFormattedDate(screening.time)
+        DisclosureGroup(isExpanded: $expanded) {
+            Table(screenings) {
+                TableColumn("Date") { screening in
+                    FCFormattedDate(screening.time)
+                }
+                .width(100)
+                TableColumn("Time") { screening in
+                    Text(FCScreeningTimeList.getFormattedTime(forScreening: screening))
+                }
             }
-            .width(100)
-            TableColumn("Time") { screening in
-                Text(FCScreeningTimeList.getFormattedTime(forScreening: screening))
-            }
+            .tableColumnHeaders(.hidden)
+            .frame(height: 24 * CGFloat(screenings.count) + 6)
+            .scrollDisabled(true)
+        } label: {
+            Text(name)
+                .bold()
         }
-        .tableColumnHeaders(.hidden)
-        .frame(height: 24 * CGFloat(screenings.count) + 6)
-        .scrollDisabled(true)
     }
 
     private static func getFormattedTime(forScreening screening: FCScreening) -> String {
