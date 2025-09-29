@@ -21,9 +21,7 @@ struct ContentView: View {
         }
         .navigationTitle(APP_NAME)
         .toolbar {
-            Button(action: controller.loadMovies) {
-                Image(systemName: "arrow.clockwise")
-            }
+            FCRefreshButton()
         }
     }
 }

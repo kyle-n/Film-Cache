@@ -6,17 +6,26 @@
 //
 
 import SwiftUI
+import Combine
 
 final class ContentViewController: ObservableObject {
     @Published private(set) var movies: [FCMovie] = []
     @Published private(set) var loading = false
+    
+    private var cancellables = Set<AnyCancellable>()
 
     init() {
         DispatchQueue.main.async {
             self.loadMovies()
+            self.listenForRefreshNotifications()
         }
     }
+    
+    private func listenForRefreshNotifications() {
+        NotificationCenter.default.addObserver(self, selector: #selector(loadMovies), name: .fcRefreshed, object: nil)
+    }
 
+    @objc
     func loadMovies() {
         loading = true
         movies = []
