@@ -13,5 +13,11 @@ struct Film_CacheApp: App {
         WindowGroup {
             ContentView()
         }
+        .commandsRemoved()
+        .commands {
+            CommandMenu("Movies") {
+                FCRefreshButton()
+            }
+        }
     }
 }

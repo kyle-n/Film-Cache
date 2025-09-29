@@ -10,9 +10,10 @@ import SwiftUI
 struct FCRefreshButton: View {
     var body: some View {
         Button(action: publishRefreshNotification) {
-            Image(systemName: "arrow.clockwise")
+            Label("Refresh", systemImage: "arrow.clockwise")
         }
-        .help("Refresh")
+        .help("Refresh (Cmd-R)")
+        .keyboardShortcut("r", modifiers: .command)
     }
     
     private func publishRefreshNotification() {
