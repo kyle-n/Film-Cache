@@ -17,6 +17,7 @@ struct FCRefreshButton: View {
     }
     
     private func publishRefreshNotification() {
-        NotificationCenter.default.post(name: .fcRefreshed, object: nil)
+//        NotificationCenter.default.post(name: .fcRefreshed, object: nil)
+        fcStore.dispatch(FCAction.moviesRequestStarted)
     }
 }

@@ -7,8 +7,9 @@
 
 import SwiftUI
 import Combine
+import ReSwift
 
-final class ContentViewController: ObservableObject {
+final class ContentViewController: ObservableObject, StoreSubscriber {
     @Published private(set) var movies: [FCMovie] = []
     @Published private(set) var loading = false
     
@@ -17,8 +18,16 @@ final class ContentViewController: ObservableObject {
     init() {
         DispatchQueue.main.async {
             self.loadMovies()
-            self.listenForRefreshNotifications()
+//            self.listenForRefreshNotifications()
+            DispatchQueue.main.async {
+                fcStore.subscribe(self)
+            }
         }
+    }
+    
+    func newState(state: FCAppState) {
+        self.movies = state.movies
+        self.loading = state.loadingMovies
     }
     
     private func listenForRefreshNotifications() {
@@ -27,8 +36,7 @@ final class ContentViewController: ObservableObject {
 
     @objc
     func loadMovies() {
-        loading = true
-        movies = []
+        fcStore.dispatch(FCAction.moviesRequestStarted)
         Task {
             do {
                 let providenceMovies = try await MegaplexConnector
@@ -36,10 +44,7 @@ final class ContentViewController: ObservableObject {
                 let universityMovies = try await MegaplexConnector
                     .getScheduledMovies(forTheaterId: FCTheater.MegaplexUniversity.rawValue).map { $0.toFCMovie() }
                 let megaplexMovies = providenceMovies.merged(with: universityMovies)
-                DispatchQueue.main.async {
-                    self.movies = megaplexMovies
-                    self.loading = false
-                }
+                fcStore.dispatch(FCAction.moviesLoaded(megaplexMovies))
             } catch {
                 print(error)
                 FCError.display(error: error, type: .couldNotLoadFilms)
