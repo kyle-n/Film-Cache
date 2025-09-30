@@ -6,10 +6,9 @@
 //
 
 import SwiftUI
+import ReSwift
 
 struct FCMovieDetailsContainer: View {
-    let movie: FCMovie
-
     @StateObject private var controller = FCMovieDetailsContainerController()
 
     var body: some View {
@@ -17,21 +16,12 @@ struct FCMovieDetailsContainer: View {
             if controller.loading {
                 fullPanelLoader
             }
-            if let movieDetails = controller.movieDetails {
+            if let movieDetails = controller.movieDetails, let movie = controller.movie {
                 FCMovieDetails(movie: movie, details: movieDetails)
             }
             Spacer()
         }
         .frame(maxWidth: .infinity, alignment: .leading)
-        .onAppear(perform: triggerMovieDetailsLoad)
-        .onChange(of: movie.title) { _, _ in
-            triggerMovieDetailsLoad()
-        }
-    }
-
-    private func triggerMovieDetailsLoad() {
-        let year = Calendar.current.component(.year, from: movie.openingDate)
-        controller.loadMovieDetails(for: movie.title, year: year)
     }
 
     private var fullPanelLoader: some View {
@@ -47,28 +37,27 @@ struct FCMovieDetailsContainer: View {
     }
 }
 
-private final class FCMovieDetailsContainerController: ObservableObject {
+private final class FCMovieDetailsContainerController: ObservableObject, StoreSubscriber {
     @Published private(set) var movieDetails: TMDBMovieDetails?
     @Published private(set) var loading = false
+    @Published private(set) var movie: FCMovie?
 
-    init() {}
+    init() {
+        DispatchQueue.main.async {
+            fcStore.subscribe(self)
+        }
+    }
+    
+    deinit {
+        fcStore.unsubscribe(self)
+    }
 
-    func loadMovieDetails(for title: String, year: Int) {
-        loading = true
-        movieDetails = nil
-        Task {
-            do {
-                let details = try await TMDBConnector.getMovie(byTitle: title, year: year)
-                DispatchQueue.main.async {
-                    self.movieDetails = details
-                    self.loading = false
-                }
-            } catch {
-                print(error)
-                FCError.display(error: error, type: .couldNotLoadFilmDetails)
-                DispatchQueue.main.async {
-                    self.loading = false
-                }
+    func newState(state: FCAppState) {
+        DispatchQueue.main.async {
+            self.movieDetails = state.movieDetails
+            self.loading = state.loadingMovieDetails
+            if let movie = state.selectedMovie {
+                self.movie = movie
             }
         }
     }

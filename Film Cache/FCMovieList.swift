@@ -9,8 +9,8 @@ import SwiftUI
 
 struct FCMovieList: View {
     let movies: [FCMovie]
-    @Binding var selectedMovieID: FCMovie.ID?
-
+    
+    @State private var selectedMovieID: FCMovie.ID?
     @State private var sortOrder: [KeyPathComparator<FCMovie>] = [KeyPathComparator(\FCMovie.openingDate)]
     private let narrowColWidth: CGFloat = 60
 
@@ -30,6 +30,9 @@ struct FCMovieList: View {
                 .width(ideal: narrowColWidth)
             TableColumn("Theater(s)", value: \.theaterName)
         }
+        .onChange(of: selectedMovieID) { _, newValue in
+            fcStore.dispatch(FCAction.movieSelected(id: newValue))
+        }
     }
 
     private var sortedMovies: [FCMovie] {
@@ -39,8 +42,7 @@ struct FCMovieList: View {
 
 #Preview {
     FCMovieList(
-        movies: [mockMovieCaughtStealing.toFCMovie()],
-        selectedMovieID: .constant(nil)
+        movies: [mockMovieCaughtStealing.toFCMovie()]
     )
     .frame(width: 700, height: 500)
     .navigationTitle(APP_NAME)

@@ -5,17 +5,29 @@
 //  Created by Kyle Nazario on 9/30/25.
 //
 
+import Foundation
 import ReSwift
 import ReSwiftThunk
 
 struct FCAppState {
     var movies: [FCMovie]
     var loadingMovies: Bool
+    var selectedMovieID: FCMovie.ID?
+    var loadingMovieDetails: Bool
+    var movieDetails: TMDBMovieDetails?
+    
+    var selectedMovie: FCMovie? {
+        movies.first { $0.id == selectedMovieID }
+    }
 }
 
 enum FCAction: Action {
     case moviesRequestStarted
+    case moviesRequestErrored
     case moviesLoaded([FCMovie])
+    case movieDetailsRequestStarted(FCMovie.ID?)
+    case movieDetailsRequestErrored
+    case movieDetailsLoaded(TMDBMovieDetails)
     
         static func appOpened() -> Thunk<FCAppState> {
             loadMovieList()
@@ -23,6 +35,30 @@ enum FCAction: Action {
         static func movieListRefreshed() -> Thunk<FCAppState> {
             loadMovieList()
         }
+    
+    static func movieSelected(id: FCMovie.ID?) -> Thunk<FCAppState> {
+        Thunk { dispatch, getState in
+            guard let state = getState(),
+                  state.loadingMovieDetails == false
+            else { return }
+            let movie = state.movies.first { movie in
+                movie.id == id
+            }
+            guard let movie = movie else { return }
+            dispatch(FCAction.movieDetailsRequestStarted(id))
+            Task {
+                do {
+                    let year = Calendar.current.component(.year, from: movie.openingDate)
+                    let details = try await TMDBConnector.getMovie(byTitle: movie.title, year: year)
+                    dispatch(FCAction.movieDetailsLoaded(details))
+                } catch {
+                    print(error)
+                    FCError.display(error: error, type: .couldNotLoadFilmDetails)
+                    dispatch(FCAction.movieDetailsRequestErrored)
+                }
+            }
+        }
+    }
         
         private static func loadMovieList() -> Thunk<FCAppState> {
             Thunk { dispatch, getState in
@@ -45,7 +81,7 @@ enum FCAction: Action {
         }
 }
 
-let defaultAppState = FCAppState(movies: [], loadingMovies: false)
+let defaultAppState = FCAppState(movies: [], loadingMovies: false, loadingMovieDetails: false)
 
 func fcReducer(action: Action, state: FCAppState?) -> FCAppState {
     var state = state ?? defaultAppState
@@ -55,9 +91,20 @@ func fcReducer(action: Action, state: FCAppState?) -> FCAppState {
     case .moviesRequestStarted:
         state.loadingMovies = true
         state.movies = []
+    case .moviesRequestErrored:
+        state.loadingMovies = false
     case .moviesLoaded(let movies):
         state.movies = movies
         state.loadingMovies = false
+    case .movieDetailsRequestStarted(let selectedMovieID):
+        state.movieDetails = nil
+        state.loadingMovieDetails = true
+        state.selectedMovieID = selectedMovieID
+    case .movieDetailsRequestErrored:
+        state.loadingMovieDetails = false
+    case .movieDetailsLoaded(let movieDetails):
+        state.movieDetails = movieDetails
+        state.loadingMovieDetails = false
     }
     
     return state
