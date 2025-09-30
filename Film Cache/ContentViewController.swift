@@ -18,7 +18,7 @@ final class ContentViewController: ObservableObject, StoreSubscriber {
     init() {
         DispatchQueue.main.async {
             fcStore.subscribe(self)
-            fcStore.dispatch(FCAction.Thunks.appOpened())
+            fcStore.dispatch(FCAction.appOpened())
         }
     }
     

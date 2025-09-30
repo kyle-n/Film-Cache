@@ -17,8 +17,14 @@ enum FCAction: Action {
     case moviesRequestStarted
     case moviesLoaded([FCMovie])
     
-    enum Thunks {    
         static func appOpened() -> Thunk<FCAppState> {
+            loadMovieList()
+        }
+        static func movieListRefreshed() -> Thunk<FCAppState> {
+            loadMovieList()
+        }
+        
+        private static func loadMovieList() -> Thunk<FCAppState> {
             Thunk { dispatch, getState in
                 guard getState()?.loadingMovies == false else { return }
                 dispatch(FCAction.moviesRequestStarted)
@@ -32,7 +38,6 @@ enum FCAction: Action {
                 }
             }
         }
-    }
 }
 
 let defaultAppState = FCAppState(movies: [], loadingMovies: false)
