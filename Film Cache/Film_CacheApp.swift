@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import NZSSystemExtensions
 
 @main
 struct Film_CacheApp: App {
@@ -17,6 +18,7 @@ struct Film_CacheApp: App {
         .commandsRemoved()
         .commands {
             CommandGroup(replacing: .appInfo) {
+                AboutAppButton(APP_NAME)
                 FCQuitButton()
             }
             CommandGroup(before: .appVisibility) {

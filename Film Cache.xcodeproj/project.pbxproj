@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		996198062E8C0D3E0045FCDB /* ReSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 996198052E8C0D3E0045FCDB /* ReSwift */; };
 		9961980C2E8C13460045FCDB /* ReSwiftThunk in Frameworks */ = {isa = PBXBuildFile; productRef = 9961980B2E8C13460045FCDB /* ReSwiftThunk */; };
+		9961980F2E8C45570045FCDB /* NZSSystemExtensions in Frameworks */ = {isa = PBXBuildFile; productRef = 9961980E2E8C45570045FCDB /* NZSSystemExtensions */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,6 +31,7 @@
 			files = (
 				9961980C2E8C13460045FCDB /* ReSwiftThunk in Frameworks */,
 				996198062E8C0D3E0045FCDB /* ReSwift in Frameworks */,
+				9961980F2E8C45570045FCDB /* NZSSystemExtensions in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -74,6 +76,7 @@
 			packageProductDependencies = (
 				996198052E8C0D3E0045FCDB /* ReSwift */,
 				9961980B2E8C13460045FCDB /* ReSwiftThunk */,
+				9961980E2E8C45570045FCDB /* NZSSystemExtensions */,
 			);
 			productName = "Film Cache";
 			productReference = 994351532E737F9200C5CEA2 /* Film Cache.app */;
@@ -106,6 +109,7 @@
 			packageReferences = (
 				996198042E8C0D3E0045FCDB /* XCRemoteSwiftPackageReference "ReSwift" */,
 				9961980A2E8C13460045FCDB /* XCRemoteSwiftPackageReference "ReSwift-Thunk" */,
+				9961980D2E8C45570045FCDB /* XCRemoteSwiftPackageReference "SystemExtensions" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 994351542E737F9200C5CEA2 /* Products */;
@@ -352,6 +356,14 @@
 				minimumVersion = 2.0.1;
 			};
 		};
+		9961980D2E8C45570045FCDB /* XCRemoteSwiftPackageReference "SystemExtensions" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/nazariosoftwarellc/SystemExtensions";
+			requirement = {
+				branch = main;
+				kind = branch;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -364,6 +376,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 9961980A2E8C13460045FCDB /* XCRemoteSwiftPackageReference "ReSwift-Thunk" */;
 			productName = ReSwiftThunk;
+		};
+		9961980E2E8C45570045FCDB /* NZSSystemExtensions */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 9961980D2E8C45570045FCDB /* XCRemoteSwiftPackageReference "SystemExtensions" */;
+			productName = NZSSystemExtensions;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

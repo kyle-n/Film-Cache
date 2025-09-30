@@ -1,5 +1,5 @@
 {
-  "originHash" : "bd7050c2571e4cf35fed961353a20a8dcd834b71d01dbe3be9193635098d409f",
+  "originHash" : "1300fb95d6345aec57eae3be9bdc08758120b46c289f60c744c09d9eabe80bb4",
   "pins" : [
     {
       "identity" : "reswift",
@@ -17,6 +17,15 @@
       "state" : {
         "revision" : "5ee9816158a2115863b1458c66cf1be9e9143b39",
         "version" : "2.0.1"
+      }
+    },
+    {
+      "identity" : "systemextensions",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/nazariosoftwarellc/SystemExtensions",
+      "state" : {
+        "branch" : "main",
+        "revision" : "490a54becae1aed61b69746881e8a14eb5f06120"
       }
     }
   ],
