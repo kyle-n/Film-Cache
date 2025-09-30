@@ -12,15 +12,20 @@ struct Film_CacheApp: App {
     var body: some Scene {
         WindowGroup {
             ContentView()
+                .onAppear(perform: initializeApp)
         }
         .commandsRemoved()
         .commands {
             CommandGroup(replacing: .appInfo) {
                 FCQuitButton()
             }
-            CommandMenu("Movies") {
-                FCRefreshButton()
+            CommandGroup(before: .appVisibility) {
+                    FCRefreshButton()
             }
         }
+    }
+    
+    private func initializeApp() {
+        NSWindow.allowsAutomaticWindowTabbing = false
     }
 }
