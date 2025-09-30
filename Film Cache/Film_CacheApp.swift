@@ -15,6 +15,9 @@ struct Film_CacheApp: App {
         }
         .commandsRemoved()
         .commands {
+            CommandGroup(replacing: .appInfo) {
+                FCQuitButton()
+            }
             CommandMenu("Movies") {
                 FCRefreshButton()
             }

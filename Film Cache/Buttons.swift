@@ -20,3 +20,17 @@ struct FCRefreshButton: View {
         fcStore.dispatch(FCAction.movieListRefreshed())
     }
 }
+
+struct FCQuitButton: View {
+    var body: some View {
+        Button(action: quit) {
+            Text("Quit \(APP_NAME)")
+        }
+        .help("Quit (Cmd-Q)")
+        .keyboardShortcut("q", modifiers: .command)
+    }
+    
+    private func quit() {
+        NSApplication.shared.terminate(nil)
+    }
+}
