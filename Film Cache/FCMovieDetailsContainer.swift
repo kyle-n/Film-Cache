@@ -5,8 +5,8 @@
 //  Created by Kyle Nazario on 9/18/25.
 //
 
-import SwiftUI
 import ReSwift
+import SwiftUI
 
 struct FCMovieDetailsContainer: View {
     @StateObject private var controller = FCMovieDetailsContainerController()
@@ -47,7 +47,7 @@ private final class FCMovieDetailsContainerController: ObservableObject, StoreSu
             fcStore.subscribe(self)
         }
     }
-    
+
     deinit {
         fcStore.unsubscribe(self)
     }
@@ -122,13 +122,13 @@ struct FCScreeningList: View {
                         .font(.title3)
                         .bold()
                         .padding(.vertical)
-                    
+
                     getScreeningsByDay(theaterScreenings: screeningsForTheater)
                 }
             }
         }
     }
-    
+
     private func getScreeningsByDay(theaterScreenings: [FCScreening]) -> some View {
         let screeningsByDay = FCScreeningList.getTheaterScreeningsByDay(screenings: theaterScreenings)
         return VStack {
@@ -168,7 +168,7 @@ struct FCScreeningList: View {
         }
         return groupedScreenings
     }
-    
+
     private static func getTheaterScreeningsByDay(screenings: [FCScreening]) -> FCScreeningsByDay {
         let now = Date()
         var today: [FCScreening] = []
@@ -177,17 +177,15 @@ struct FCScreeningList: View {
         for screening in screenings {
             if Calendar.current.isDateInToday(screening.time) {
                 today.append(screening)
-            }
-            else if Calendar.current.isDateInTomorrow(screening.time) {
+            } else if Calendar.current.isDateInTomorrow(screening.time) {
                 tomorrow.append(screening)
-            }
-            else {
+            } else {
                 others.append(screening)
             }
         }
         return FCScreeningsByDay(today: today, tomorrow: tomorrow, others: others)
     }
-    
+
     private struct FCScreeningsByDay {
         let today: [FCScreening]
         let tomorrow: [FCScreening]
@@ -198,7 +196,7 @@ struct FCScreeningList: View {
 struct FCScreeningTimeList: View {
     let name: String
     let screenings: [FCScreening]
-    
+
     @State private var expanded = true
 
     var body: some View {

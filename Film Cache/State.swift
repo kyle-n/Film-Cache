@@ -15,7 +15,7 @@ struct FCAppState {
     var selectedMovieID: FCMovie.ID?
     var loadingMovieDetails: Bool
     var movieDetails: TMDBMovieDetails?
-    
+
     var selectedMovie: FCMovie? {
         movies.first { $0.id == selectedMovieID }
     }
@@ -28,14 +28,15 @@ enum FCAction: Action {
     case movieDetailsRequestStarted(FCMovie.ID?)
     case movieDetailsRequestErrored
     case movieDetailsLoaded(TMDBMovieDetails)
-    
-        static func appOpened() -> Thunk<FCAppState> {
-            loadMovieList()
-        }
-        static func movieListRefreshed() -> Thunk<FCAppState> {
-            loadMovieList()
-        }
-    
+
+    static func appOpened() -> Thunk<FCAppState> {
+        loadMovieList()
+    }
+
+    static func movieListRefreshed() -> Thunk<FCAppState> {
+        loadMovieList()
+    }
+
     static func movieSelected(id: FCMovie.ID?) -> Thunk<FCAppState> {
         Thunk { dispatch, getState in
             guard let state = getState(),
@@ -59,26 +60,26 @@ enum FCAction: Action {
             }
         }
     }
-        
-        private static func loadMovieList() -> Thunk<FCAppState> {
-            Thunk { dispatch, getState in
-                guard getState()?.loadingMovies == false else { return }
-                dispatch(FCAction.moviesRequestStarted)
-                Task {
-                    do {
-                        let providenceMovies = try await MegaplexConnector
-                            .getScheduledMovies(forTheaterId: FCTheater.MegaplexProvidence.rawValue).map { $0.toFCMovie() }
-                        let universityMovies = try await MegaplexConnector
-                            .getScheduledMovies(forTheaterId: FCTheater.MegaplexUniversity.rawValue).map { $0.toFCMovie() }
-                        let megaplexMovies = providenceMovies.merged(with: universityMovies)
-                        dispatch(FCAction.moviesLoaded(megaplexMovies))
-                    } catch {
-                        print(error)
-                        FCError.display(error: error, type: .couldNotLoadFilms)
-                    }
+
+    private static func loadMovieList() -> Thunk<FCAppState> {
+        Thunk { dispatch, getState in
+            guard getState()?.loadingMovies == false else { return }
+            dispatch(FCAction.moviesRequestStarted)
+            Task {
+                do {
+                    let providenceMovies = try await MegaplexConnector
+                        .getScheduledMovies(forTheaterId: FCTheater.MegaplexProvidence.rawValue).map { $0.toFCMovie() }
+                    let universityMovies = try await MegaplexConnector
+                        .getScheduledMovies(forTheaterId: FCTheater.MegaplexUniversity.rawValue).map { $0.toFCMovie() }
+                    let megaplexMovies = providenceMovies.merged(with: universityMovies)
+                    dispatch(FCAction.moviesLoaded(megaplexMovies))
+                } catch {
+                    print(error)
+                    FCError.display(error: error, type: .couldNotLoadFilms)
                 }
             }
         }
+    }
 }
 
 let defaultAppState = FCAppState(movies: [], loadingMovies: false, loadingMovieDetails: false)
@@ -86,27 +87,27 @@ let defaultAppState = FCAppState(movies: [], loadingMovies: false, loadingMovieD
 func fcReducer(action: Action, state: FCAppState?) -> FCAppState {
     var state = state ?? defaultAppState
     guard let action = action as? FCAction else { return state }
-    
+
     switch action {
     case .moviesRequestStarted:
         state.loadingMovies = true
         state.movies = []
     case .moviesRequestErrored:
         state.loadingMovies = false
-    case .moviesLoaded(let movies):
+    case let .moviesLoaded(movies):
         state.movies = movies
         state.loadingMovies = false
-    case .movieDetailsRequestStarted(let selectedMovieID):
+    case let .movieDetailsRequestStarted(selectedMovieID):
         state.movieDetails = nil
         state.loadingMovieDetails = true
         state.selectedMovieID = selectedMovieID
     case .movieDetailsRequestErrored:
         state.loadingMovieDetails = false
-    case .movieDetailsLoaded(let movieDetails):
+    case let .movieDetailsLoaded(movieDetails):
         state.movieDetails = movieDetails
         state.loadingMovieDetails = false
     }
-    
+
     return state
 }
 

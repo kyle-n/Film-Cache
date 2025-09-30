@@ -15,7 +15,7 @@ struct FCRefreshButton: View {
         .help("Refresh (Cmd-R)")
         .keyboardShortcut("r", modifiers: .command)
     }
-    
+
     private func publishRefreshNotification() {
         fcStore.dispatch(FCAction.movieListRefreshed())
     }
@@ -29,7 +29,7 @@ struct FCQuitButton: View {
         .help("Quit (Cmd-Q)")
         .keyboardShortcut("q", modifiers: .command)
     }
-    
+
     private func quit() {
         NSApplication.shared.terminate(nil)
     }

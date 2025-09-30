@@ -42,7 +42,7 @@ struct FCListDetailsSplitPane: View {
 #Preview {
     VStack {
         FCListDetailsSplitPane(
-            movies: [mockMovieCaughtStealing.toFCMovie()],
+            movies: [mockMovieCaughtStealing.toFCMovie()]
         )
         .frame(width: 700, height: 350)
         .navigationTitle(APP_NAME)

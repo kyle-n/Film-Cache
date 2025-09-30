@@ -9,7 +9,7 @@ import SwiftUI
 
 struct FCMovieList: View {
     let movies: [FCMovie]
-    
+
     @State private var selectedMovieID: FCMovie.ID?
     @State private var sortOrder: [KeyPathComparator<FCMovie>] = [KeyPathComparator(\FCMovie.openingDate)]
     private let narrowColWidth: CGFloat = 60
