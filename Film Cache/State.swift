@@ -93,6 +93,8 @@ func fcReducer(action: Action, state: FCAppState?) -> FCAppState {
     case .moviesRequestStarted:
         state.loadingMovies = true
         state.movies = []
+        state.selectedMovieID = nil
+        state.movieDetails = nil
     case .moviesRequestErrored:
         state.loadingMovies = false
     case let .moviesLoaded(movies):
