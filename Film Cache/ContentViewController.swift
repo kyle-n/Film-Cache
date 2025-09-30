@@ -25,9 +25,15 @@ final class ContentViewController: ObservableObject, StoreSubscriber {
         }
     }
     
+    deinit {
+        fcStore.unsubscribe(self)
+    }
+    
     func newState(state: FCAppState) {
-        self.movies = state.movies
-        self.loading = state.loadingMovies
+        DispatchQueue.main.async {
+            self.movies = state.movies
+            self.loading = state.loadingMovies
+        }
     }
     
     private func listenForRefreshNotifications() {
