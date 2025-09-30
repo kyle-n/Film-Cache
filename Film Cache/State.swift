@@ -29,12 +29,17 @@ enum FCAction: Action {
                 guard getState()?.loadingMovies == false else { return }
                 dispatch(FCAction.moviesRequestStarted)
                 Task {
-                    let providenceMovies = try await MegaplexConnector
-                        .getScheduledMovies(forTheaterId: FCTheater.MegaplexProvidence.rawValue).map { $0.toFCMovie() }
-                    let universityMovies = try await MegaplexConnector
-                        .getScheduledMovies(forTheaterId: FCTheater.MegaplexUniversity.rawValue).map { $0.toFCMovie() }
-                    let megaplexMovies = providenceMovies.merged(with: universityMovies)
-                    dispatch(FCAction.moviesLoaded(megaplexMovies))
+                    do {
+                        let providenceMovies = try await MegaplexConnector
+                            .getScheduledMovies(forTheaterId: FCTheater.MegaplexProvidence.rawValue).map { $0.toFCMovie() }
+                        let universityMovies = try await MegaplexConnector
+                            .getScheduledMovies(forTheaterId: FCTheater.MegaplexUniversity.rawValue).map { $0.toFCMovie() }
+                        let megaplexMovies = providenceMovies.merged(with: universityMovies)
+                        dispatch(FCAction.moviesLoaded(megaplexMovies))
+                    } catch {
+                        print(error)
+                        FCError.display(error: error, type: .couldNotLoadFilms)
+                    }
                 }
             }
         }
