@@ -6,6 +6,7 @@
 //
 
 import ReSwift
+import ReSwiftThunk
 
 struct FCAppState {
     var movies: [FCMovie]
@@ -15,6 +16,23 @@ struct FCAppState {
 enum FCAction: Action {
     case moviesRequestStarted
     case moviesLoaded([FCMovie])
+    
+    enum Thunks {    
+        static func appOpened() -> Thunk<FCAppState> {
+            Thunk { dispatch, getState in
+                guard getState()?.loadingMovies == false else { return }
+                dispatch(FCAction.moviesRequestStarted)
+                Task {
+                    let providenceMovies = try await MegaplexConnector
+                        .getScheduledMovies(forTheaterId: FCTheater.MegaplexProvidence.rawValue).map { $0.toFCMovie() }
+                    let universityMovies = try await MegaplexConnector
+                        .getScheduledMovies(forTheaterId: FCTheater.MegaplexUniversity.rawValue).map { $0.toFCMovie() }
+                    let megaplexMovies = providenceMovies.merged(with: universityMovies)
+                    dispatch(FCAction.moviesLoaded(megaplexMovies))
+                }
+            }
+        }
+    }
 }
 
 let defaultAppState = FCAppState(movies: [], loadingMovies: false)
@@ -35,4 +53,6 @@ func fcReducer(action: Action, state: FCAppState?) -> FCAppState {
     return state
 }
 
-let fcStore = Store(reducer: fcReducer, state: defaultAppState)
+let thunkMiddleware: Middleware<FCAppState> = createThunkMiddleware()
+
+let fcStore = Store(reducer: fcReducer, state: defaultAppState, middleware: [thunkMiddleware])

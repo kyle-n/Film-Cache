@@ -17,11 +17,8 @@ final class ContentViewController: ObservableObject, StoreSubscriber {
 
     init() {
         DispatchQueue.main.async {
-            self.loadMovies()
-//            self.listenForRefreshNotifications()
-            DispatchQueue.main.async {
-                fcStore.subscribe(self)
-            }
+            fcStore.subscribe(self)
+            fcStore.dispatch(FCAction.Thunks.appOpened())
         }
     }
     
@@ -33,31 +30,6 @@ final class ContentViewController: ObservableObject, StoreSubscriber {
         DispatchQueue.main.async {
             self.movies = state.movies
             self.loading = state.loadingMovies
-        }
-    }
-    
-    private func listenForRefreshNotifications() {
-        NotificationCenter.default.addObserver(self, selector: #selector(loadMovies), name: .fcRefreshed, object: nil)
-    }
-
-    @objc
-    func loadMovies() {
-        fcStore.dispatch(FCAction.moviesRequestStarted)
-        Task {
-            do {
-                let providenceMovies = try await MegaplexConnector
-                    .getScheduledMovies(forTheaterId: FCTheater.MegaplexProvidence.rawValue).map { $0.toFCMovie() }
-                let universityMovies = try await MegaplexConnector
-                    .getScheduledMovies(forTheaterId: FCTheater.MegaplexUniversity.rawValue).map { $0.toFCMovie() }
-                let megaplexMovies = providenceMovies.merged(with: universityMovies)
-                fcStore.dispatch(FCAction.moviesLoaded(megaplexMovies))
-            } catch {
-                print(error)
-                FCError.display(error: error, type: .couldNotLoadFilms)
-                DispatchQueue.main.async {
-                    self.loading = false
-                }
-            }
         }
     }
 }

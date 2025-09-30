@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		996198062E8C0D3E0045FCDB /* ReSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 996198052E8C0D3E0045FCDB /* ReSwift */; };
+		9961980C2E8C13460045FCDB /* ReSwiftThunk in Frameworks */ = {isa = PBXBuildFile; productRef = 9961980B2E8C13460045FCDB /* ReSwiftThunk */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -27,6 +28,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9961980C2E8C13460045FCDB /* ReSwiftThunk in Frameworks */,
 				996198062E8C0D3E0045FCDB /* ReSwift in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -71,6 +73,7 @@
 			name = "Film Cache";
 			packageProductDependencies = (
 				996198052E8C0D3E0045FCDB /* ReSwift */,
+				9961980B2E8C13460045FCDB /* ReSwiftThunk */,
 			);
 			productName = "Film Cache";
 			productReference = 994351532E737F9200C5CEA2 /* Film Cache.app */;
@@ -102,6 +105,7 @@
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
 				996198042E8C0D3E0045FCDB /* XCRemoteSwiftPackageReference "ReSwift" */,
+				9961980A2E8C13460045FCDB /* XCRemoteSwiftPackageReference "ReSwift-Thunk" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 994351542E737F9200C5CEA2 /* Products */;
@@ -340,6 +344,14 @@
 				minimumVersion = 6.1.1;
 			};
 		};
+		9961980A2E8C13460045FCDB /* XCRemoteSwiftPackageReference "ReSwift-Thunk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/ReSwift/ReSwift-Thunk.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.0.1;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -347,6 +359,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 996198042E8C0D3E0045FCDB /* XCRemoteSwiftPackageReference "ReSwift" */;
 			productName = ReSwift;
+		};
+		9961980B2E8C13460045FCDB /* ReSwiftThunk */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 9961980A2E8C13460045FCDB /* XCRemoteSwiftPackageReference "ReSwift-Thunk" */;
+			productName = ReSwiftThunk;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
