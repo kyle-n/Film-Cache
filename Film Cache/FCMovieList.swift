@@ -31,7 +31,11 @@ struct FCMovieList: View {
             TableColumn("Theater(s)", value: \.theaterName)
         }
         .onChange(of: selectedMovieID) { _, newValue in
-            fcStore.dispatch(FCAction.movieSelected(id: newValue))
+            if let id = newValue {
+                fcStore.dispatch(FCAction.movieSelected(id: id))
+            } else {
+                fcStore.dispatch(FCAction.movieDeselected)
+            }
         }
     }
 

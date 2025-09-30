@@ -25,6 +25,7 @@ enum FCAction: Action {
     case moviesRequestStarted
     case moviesRequestErrored
     case moviesLoaded([FCMovie])
+    case movieDeselected
     case movieDetailsRequestStarted(FCMovie.ID?)
     case movieDetailsRequestErrored
     case movieDetailsLoaded(TMDBMovieDetails)
@@ -97,6 +98,10 @@ func fcReducer(action: Action, state: FCAppState?) -> FCAppState {
     case let .moviesLoaded(movies):
         state.movies = movies
         state.loadingMovies = false
+    case .movieDeselected:
+        state.movieDetails = nil
+        state.loadingMovies = false
+        state.selectedMovieID = nil
     case let .movieDetailsRequestStarted(selectedMovieID):
         state.movieDetails = nil
         state.loadingMovieDetails = true
