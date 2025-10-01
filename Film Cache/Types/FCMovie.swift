@@ -18,6 +18,11 @@ struct FCMovie: Identifiable {
     let screenings: [FCScreening]
 
     static let blankDate = Date(timeIntervalSince1970: 0)
+    
+    func matches(query: String) -> Bool {
+        let normalizedQuery = query.lowercased().trimmingCharacters(in: .whitespacesAndNewlines)
+        return title.lowercased().trimmingCharacters(in: .whitespacesAndNewlines).contains(normalizedQuery) || distributor.lowercased().trimmingCharacters(in: .whitespacesAndNewlines).contains(normalizedQuery) || theaterName.lowercased().trimmingCharacters(in: .whitespacesAndNewlines).contains(normalizedQuery)
+    }
 }
 
 extension [FCMovie] {

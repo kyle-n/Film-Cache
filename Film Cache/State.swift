@@ -20,6 +20,15 @@ struct FCAppState {
     var selectedMovie: FCMovie? {
         movies.first { $0.id == selectedMovieID }
     }
+    
+    var filteredMovies: [FCMovie] {
+        guard let listQuery,
+              listQuery != ""
+        else { return movies }
+        return movies.filter { movie in
+            movie.matches(query: listQuery)
+        }
+    }
 }
 
 enum FCAction: Action {

@@ -52,7 +52,7 @@ final class ContentViewController: ObservableObject, StoreSubscriber {
 
     func newState(state: FCAppState) {
         DispatchQueue.main.async {
-            self.movies = state.movies
+            self.movies = state.filteredMovies
             self.loading = state.loadingMovies
             self.showDetails = state.selectedMovieID != nil
             if let listQuery = state.listQuery {

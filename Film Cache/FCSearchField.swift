@@ -107,4 +107,8 @@ final class FCSearchFieldController: NSViewController, NSSearchFieldDelegate, St
             self.searchField.resignFirstResponder()
         }
     }
+    
+    func controlTextDidEndEditing(_ obj: Notification) {
+        fcStore.dispatch(FCAction.queryChanged(searchField.stringValue))
+    }
 }
