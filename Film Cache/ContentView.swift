@@ -22,7 +22,12 @@ struct ContentView: View {
         .navigationTitle(APP_NAME)
         .toolbar {
             FCRefreshButton()
-            FCSearchButton()
+            if controller.showSearchField {
+                FCSearchField()
+                    .frame(width: 160)
+            } else {
+                FCSearchButton()
+            }
         }
     }
 }
@@ -31,6 +36,8 @@ final class ContentViewController: ObservableObject, StoreSubscriber {
     @Published private(set) var movies: [FCMovie] = []
     @Published private(set) var loading = false
     @Published private(set) var showDetails = false
+    @Published var query: String = ""
+    @Published private(set) var showSearchField = false
 
     init() {
         DispatchQueue.main.async {
@@ -48,6 +55,10 @@ final class ContentViewController: ObservableObject, StoreSubscriber {
             self.movies = state.movies
             self.loading = state.loadingMovies
             self.showDetails = state.selectedMovieID != nil
+            if let listQuery = state.listQuery {
+                self.query = listQuery
+            }
+            self.showSearchField = state.listQuery != nil
         }
     }
 }
