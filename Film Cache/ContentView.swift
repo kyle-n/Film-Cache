@@ -22,6 +22,7 @@ struct ContentView: View {
         .navigationTitle(APP_NAME)
         .toolbar {
             FCRefreshButton()
+            FCSearchButton()
         }
     }
 }

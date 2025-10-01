@@ -22,7 +22,8 @@ struct Film_CacheApp: App {
                 FCQuitButton()
             }
             CommandGroup(before: .appVisibility) {
-                    FCRefreshButton()
+                FCRefreshButton()
+                FCSearchButton()
             }
         }
     }

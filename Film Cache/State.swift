@@ -15,6 +15,7 @@ struct FCAppState {
     var selectedMovieID: FCMovie.ID?
     var loadingMovieDetails: Bool
     var movieDetails: TMDBMovieDetails?
+    var listQuery: String?
 
     var selectedMovie: FCMovie? {
         movies.first { $0.id == selectedMovieID }
@@ -29,6 +30,8 @@ enum FCAction: Action {
     case movieDetailsRequestStarted(FCMovie.ID?)
     case movieDetailsRequestErrored
     case movieDetailsLoaded(TMDBMovieDetails)
+    case searchStarted
+    case queryChanged(String)
 
     static func appOpened() -> Thunk<FCAppState> {
         loadMovieList()
@@ -113,6 +116,10 @@ func fcReducer(action: Action, state: FCAppState?) -> FCAppState {
     case let .movieDetailsLoaded(movieDetails):
         state.movieDetails = movieDetails
         state.loadingMovieDetails = false
+    case .searchStarted:
+        state.listQuery = ""
+    case let .queryChanged(newQuery):
+        state.listQuery = newQuery
     }
 
     return state

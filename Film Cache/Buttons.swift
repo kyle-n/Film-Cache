@@ -34,3 +34,17 @@ struct FCQuitButton: View {
         NSApplication.shared.terminate(nil)
     }
 }
+
+struct FCSearchButton: View {
+    var body: some View {
+        Button(action: publishSearchNotification) {
+            Label("Search", systemImage: "magnifyingglass")
+        }
+        .help("Search (Cmd-F)")
+        .keyboardShortcut("f", modifiers: .command)
+    }
+    
+    private func publishSearchNotification() {
+        fcStore.dispatch(FCAction.searchStarted)
+    }
+}
