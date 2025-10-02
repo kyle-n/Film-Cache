@@ -40,6 +40,7 @@ enum FCAction: Action {
     case movieDetailsRequestErrored
     case movieDetailsLoaded(TMDBMovieDetails)
     case searchStarted
+    case searchEnded
     case queryChanged(String)
 
     static func appOpened() -> Thunk<FCAppState> {
@@ -127,6 +128,8 @@ func fcReducer(action: Action, state: FCAppState?) -> FCAppState {
         state.loadingMovieDetails = false
     case .searchStarted:
         state.listQuery = ""
+    case .searchEnded:
+        state.listQuery = nil
     case let .queryChanged(newQuery):
         state.listQuery = newQuery
     }

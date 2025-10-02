@@ -74,8 +74,15 @@ final class FCSearchFieldController: NSViewController, NSSearchFieldDelegate, St
     
     func controlTextDidEndEditing(_ obj: Notification) {
         let newQuery = searchField.stringValue
-        if fcStore.state.listQuery != newQuery {
+        
+        // FCSearchField is in toolbar
+        let searchFieldActive = searchField.window?.firstResponder == searchField.window
+        
+        if fcStore.state.listQuery != newQuery && searchFieldActive {
             fcStore.dispatch(FCAction.queryChanged(newQuery))
+        }
+        if newQuery.isEmpty && !searchFieldActive {
+            fcStore.dispatch(FCAction.searchEnded)
         }
     }
 }
