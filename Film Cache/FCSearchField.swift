@@ -54,42 +54,6 @@ final class FCSearchFieldController: NSViewController, NSSearchFieldDelegate, St
     
     private func setupSearchField() {
             view.addSubview(searchField)
-//            view.addConstraint(NSLayoutConstraint(
-//                item: searchField,
-//                attribute: .left,
-//                relatedBy: .equal,
-//                toItem: view,
-//                attribute: .left,
-//                multiplier: 1.0,
-//                constant: 0
-//            ))
-//            view.addConstraint(NSLayoutConstraint(
-//                item: searchField,
-//                attribute: .top,
-//                relatedBy: .equal,
-//                toItem: view,
-//                attribute: .top,
-//                multiplier: 1.0,
-//                constant: 0
-//            ))
-//            view.addConstraint(NSLayoutConstraint(
-//                item: searchField,
-//                attribute: .right,
-//                relatedBy: .equal,
-//                toItem: view,
-//                attribute: .right,
-//                multiplier: 1.0,
-//                constant: 0
-//            ))
-//            view.addConstraint(NSLayoutConstraint(
-//                item: searchField,
-//                attribute: .bottom,
-//                relatedBy: .equal,
-//                toItem: view,
-//                attribute: .bottom,
-//                multiplier: 1.0,
-//                constant: 0
-//            ))
             searchField.frame = view.bounds
             searchField.delegate = self
             searchField.drawsBackground = false
