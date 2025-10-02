@@ -81,10 +81,12 @@ struct FCMovieDetails: View {
                     Spacer()
                 }
                 if let posterURL {
-                    AsyncImage(url: posterURL) { imgResult in
-                        imgResult.image?
-                            .resizable()
-                            .scaledToFit()
+                    AsyncImage(url: posterURL, transaction: Transaction(animation: .snappy)) { phase in
+                        if let image = phase.image {
+                            image
+                                .resizable()
+                                .scaledToFit()
+                        }
                     }
                 }
                 Text(details.tagline)
