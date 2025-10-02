@@ -73,6 +73,9 @@ final class FCSearchFieldController: NSViewController, NSSearchFieldDelegate, St
     }
     
     func controlTextDidEndEditing(_ obj: Notification) {
-        fcStore.dispatch(FCAction.queryChanged(searchField.stringValue))
+        let newQuery = searchField.stringValue
+        if fcStore.state.listQuery != newQuery {
+            fcStore.dispatch(FCAction.queryChanged(newQuery))
+        }
     }
 }
