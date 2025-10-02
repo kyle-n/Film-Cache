@@ -21,12 +21,22 @@ struct ContentView: View {
         }
         .navigationTitle(APP_NAME)
         .toolbar {
-            FCRefreshButton()
-            if controller.showSearchField {
-                FCSearchField()
-                    .frame(width: 160)
-            } else {
-                FCSearchButton()
+            // Nesting required, because top-level children of .toolbar() cannot be animated
+            // https://www.reddit.com/r/SwiftUI/comments/1dt2bez/animated_transition_for_the_navigation_bar/
+            ToolbarItemGroup {
+                HStack {
+                    FCRefreshButton()
+                        .border(Color.red)
+                    if controller.showSearchField {
+                        FCSearchField()
+                            .frame(width: 160)
+                            .transition(.scale)
+                    } else {
+                        FCSearchButton()
+                            .border(Color.blue)
+                    }
+                }
+                .animation(.snappy, value: controller.showSearchField)
             }
         }
     }
@@ -58,7 +68,9 @@ final class ContentViewController: ObservableObject, StoreSubscriber {
             if let listQuery = state.listQuery {
                 self.query = listQuery
             }
-            self.showSearchField = state.listQuery != nil
+            withAnimation {
+                self.showSearchField = state.listQuery != nil
+            }
         }
     }
 }

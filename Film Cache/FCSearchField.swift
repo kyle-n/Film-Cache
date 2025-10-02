@@ -46,10 +46,12 @@ final class FCSearchFieldController: NSViewController, NSSearchFieldDelegate, St
             setupSearchField()
             
             if fcStore.state.listQuery != nil {
-                searchField.becomeFirstResponder()
+                // Gives slide in animation in ContentView time to finish
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                    self.searchField.becomeFirstResponder()
+                }
             }
         }
-        
     }
     
     private func setupSearchField() {
@@ -66,7 +68,7 @@ final class FCSearchFieldController: NSViewController, NSSearchFieldDelegate, St
     
     func newState(state: FCAppState) {
         if state.listQuery != nil {
-            self.searchField.becomeFirstResponder()
+            searchField.becomeFirstResponder()
         } else {
             self.searchField.resignFirstResponder()
         }
