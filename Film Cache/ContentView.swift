@@ -26,14 +26,12 @@ struct ContentView: View {
             ToolbarItemGroup {
                 HStack {
                     FCRefreshButton()
-                        .border(Color.red)
                     if controller.showSearchField {
                         FCSearchField()
                             .frame(width: 160)
                             .transition(.scale)
                     } else {
                         FCSearchButton()
-                            .border(Color.blue)
                     }
                 }
                 .animation(.snappy, value: controller.showSearchField)
