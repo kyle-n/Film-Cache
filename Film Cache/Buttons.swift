@@ -48,3 +48,17 @@ struct FCSearchButton: View {
         fcStore.dispatch(FCAction.searchStarted)
     }
 }
+
+struct FCNextTabButton: View {
+    var body: some View {
+        Button(action: publishNotification) {
+            Label("Show Next Tab", systemImage: "chevron.right")
+        }
+        .help("Show Next Tab (Cmd-Shift-])")
+        .keyboardShortcut("]", modifiers: [.command, .shift])
+    }
+    
+    private func publishNotification() {
+        fcStore.dispatch(FCAction.nextTabSelected)
+    }
+}

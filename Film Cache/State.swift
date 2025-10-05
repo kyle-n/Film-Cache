@@ -49,6 +49,7 @@ enum FCAction: Action {
     case searchEnded
     case queryChanged(String)
     case tabSelected(FCAppState.TabOption)
+    case nextTabSelected
 
     static func appOpened() -> Thunk<FCAppState> {
         loadMovieList()
@@ -141,6 +142,9 @@ func fcReducer(action: Action, state: FCAppState?) -> FCAppState {
     case let .queryChanged(newQuery):
         state.listQuery = newQuery
     case let .tabSelected(newTab):
+        state.selectedTab = newTab
+    case .nextTabSelected:
+        let newTab: FCAppState.TabOption = state.selectedTab == .megaplex ? .utahTheater : .megaplex
         state.selectedTab = newTab
     }
 
