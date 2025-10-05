@@ -13,11 +13,22 @@ struct ContentView: View {
 
     var body: some View {
         Group {
-            if controller.loading {
-                ProgressView()
-            } else {
-                FCListDetailsSplitPane(movies: controller.movies, showDetails: controller.showDetails)
-            }
+                TabView {
+                    Tab {
+                        if controller.loading {
+                            ProgressView()
+                        } else {
+                            FCListDetailsSplitPane(movies: controller.movies, showDetails: controller.showDetails)
+                        }
+                    } label: {
+                        Label("Megaplex", systemImage: "film")
+                    }
+                    Tab {
+                        FCUtahTheaterSchedule()
+                    } label: {
+                        Label("Utah Theater", systemImage: "theatermasks")
+                    }
+                }
         }
         .navigationTitle(APP_NAME)
         .toolbar {
