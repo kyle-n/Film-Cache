@@ -26,6 +26,7 @@ struct Film_CacheApp: App {
                 FCSearchButton()
             }
             CommandGroup(after: .toolbar) {
+                FCPreviousTabButton()
                 FCNextTabButton()
             }
         }

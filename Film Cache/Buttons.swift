@@ -75,3 +75,19 @@ struct FCNextTabButton: View, FCMenuButton {
         fcStore.dispatch(FCAction.nextTabSelected)
     }
 }
+
+struct FCPreviousTabButton: View, FCMenuButton {
+    internal let title = "Show Previous Tab"
+    
+    var body: some View {
+        Button(action: publishNotification) {
+            Label(title, systemImage: "chevron.left")
+        }
+        .help("\(title) (Cmd-Shift-[)")
+        .keyboardShortcut("[", modifiers: [.command, .shift])
+    }
+    
+    internal func publishNotification() {
+        fcStore.dispatch(FCAction.previousTabSelected)
+    }
+}
