@@ -7,26 +7,35 @@
 
 import SwiftUI
 
-struct FCRefreshButton: View {
+protocol FCMenuButton {
+    var title: String { get }
+    func publishNotification() -> Void
+}
+
+struct FCRefreshButton: View, FCMenuButton {
+    internal let title: String = "Refresh"
+    
     var body: some View {
-        Button(action: publishRefreshNotification) {
-            Label("Refresh", systemImage: "arrow.clockwise")
+        Button(action: publishNotification) {
+            Label(title, systemImage: "arrow.clockwise")
         }
-        .help("Refresh (Cmd-R)")
+        .help("\(title) (Cmd-R)")
         .keyboardShortcut("r", modifiers: .command)
     }
 
-    private func publishRefreshNotification() {
+    internal func publishNotification() {
         fcStore.dispatch(FCAction.movieListRefreshed())
     }
 }
 
 struct FCQuitButton: View {
+    internal let title = "Quit"
+
     var body: some View {
         Button(action: quit) {
-            Text("Quit \(APP_NAME)")
+            Text("\(title) \(APP_NAME)")
         }
-        .help("Quit (Cmd-Q)")
+        .help("\(title) (Cmd-Q)")
         .keyboardShortcut("q", modifiers: .command)
     }
 
@@ -35,30 +44,34 @@ struct FCQuitButton: View {
     }
 }
 
-struct FCSearchButton: View {
+struct FCSearchButton: View, FCMenuButton {
+    internal let title = "Search"
+    
     var body: some View {
-        Button(action: publishSearchNotification) {
-            Label("Search", systemImage: "magnifyingglass")
+        Button(action: publishNotification) {
+            Label(title, systemImage: "magnifyingglass")
         }
-        .help("Search (Cmd-F)")
+        .help("\(title) (Cmd-F)")
         .keyboardShortcut("f", modifiers: .command)
     }
 
-    private func publishSearchNotification() {
+    internal func publishNotification() {
         fcStore.dispatch(FCAction.searchStarted)
     }
 }
 
-struct FCNextTabButton: View {
+struct FCNextTabButton: View, FCMenuButton {
+    internal let title: String = "Show Next Tab"
+    
     var body: some View {
         Button(action: publishNotification) {
-            Label("Show Next Tab", systemImage: "chevron.right")
+            Label(title, systemImage: "chevron.right")
         }
-        .help("Show Next Tab (Cmd-Shift-])")
+        .help("\(title) (Cmd-Shift-])")
         .keyboardShortcut("]", modifiers: [.command, .shift])
     }
     
-    private func publishNotification() {
+    internal func publishNotification() {
         fcStore.dispatch(FCAction.nextTabSelected)
     }
 }
