@@ -14,7 +14,7 @@ struct ContentView: View {
     var body: some View {
         Group {
             TabView(selection: $controller.selectedTab) {
-                Tab(value: ContentViewController.TabOption.megaplex) {
+                Tab(value: FCAppState.TabOption.megaplex) {
                     if controller.loading {
                         ProgressView()
                     } else {
@@ -23,7 +23,7 @@ struct ContentView: View {
                 } label: {
                     Label("Megaplex", systemImage: "film")
                 }
-                Tab(value: ContentViewController.TabOption.utahTheater) {
+                Tab(value: FCAppState.TabOption.utahTheater) {
                     FCUtahTheaterSchedule()
                 } label: {
                     Label("Utah Theater", systemImage: "theatermasks")
@@ -57,7 +57,13 @@ final class ContentViewController: ObservableObject, StoreSubscriber {
     @Published private(set) var showDetails = false
     @Published var query: String = ""
     @Published private(set) var showSearchField = false
-    @Published var selectedTab: TabOption = .megaplex
+    @Published var selectedTab: FCAppState.TabOption = .megaplex {
+        didSet {
+            if selectedTab != fcStore.state.selectedTab {
+                fcStore.dispatch(FCAction.tabSelected(selectedTab))
+            }
+        }
+    }
 
     init() {
         DispatchQueue.main.async {
@@ -80,16 +86,9 @@ final class ContentViewController: ObservableObject, StoreSubscriber {
             }
             withAnimation {
                 self.showSearchField = state.listQuery != nil
-                if self.showSearchField {
-                    self.selectedTab = .megaplex
-                }
             }
+            self.selectedTab = state.selectedTab
         }
-    }
-    
-    enum TabOption: CaseIterable, Hashable {
-        case megaplex
-        case utahTheater
     }
 }
 

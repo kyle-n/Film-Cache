@@ -16,6 +16,7 @@ struct FCAppState {
     var loadingMovieDetails: Bool
     var movieDetails: TMDBMovieDetails?
     var listQuery: String?
+    var selectedTab: TabOption
 
     var selectedMovie: FCMovie? {
         movies.first { $0.id == selectedMovieID }
@@ -28,6 +29,11 @@ struct FCAppState {
         return movies.filter { movie in
             movie.matches(query: listQuery)
         }
+    }
+    
+    enum TabOption: CaseIterable, Hashable {
+        case megaplex
+        case utahTheater
     }
 }
 
@@ -42,6 +48,7 @@ enum FCAction: Action {
     case searchStarted
     case searchEnded
     case queryChanged(String)
+    case tabSelected(FCAppState.TabOption)
 
     static func appOpened() -> Thunk<FCAppState> {
         loadMovieList()
@@ -96,7 +103,7 @@ enum FCAction: Action {
     }
 }
 
-let defaultAppState = FCAppState(movies: [], loadingMovies: false, loadingMovieDetails: false)
+let defaultAppState = FCAppState(movies: [], loadingMovies: false, loadingMovieDetails: false, selectedTab: .megaplex)
 
 func fcReducer(action: Action, state: FCAppState?) -> FCAppState {
     var state = state ?? defaultAppState
@@ -128,10 +135,13 @@ func fcReducer(action: Action, state: FCAppState?) -> FCAppState {
         state.loadingMovieDetails = false
     case .searchStarted:
         state.listQuery = ""
+        state.selectedTab = .megaplex
     case .searchEnded:
         state.listQuery = nil
     case let .queryChanged(newQuery):
         state.listQuery = newQuery
+    case let .tabSelected(newTab):
+        state.selectedTab = newTab
     }
 
     return state
