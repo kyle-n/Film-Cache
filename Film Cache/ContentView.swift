@@ -5,30 +5,30 @@
 //  Created by Kyle Nazario on 9/11/25.
 //
 
-import SwiftUI
 import ReSwift
+import SwiftUI
 
 struct ContentView: View {
     @StateObject() private var controller = ContentViewController()
 
     var body: some View {
         Group {
-                TabView {
-                    Tab {
-                        if controller.loading {
-                            ProgressView()
-                        } else {
-                            FCListDetailsSplitPane(movies: controller.movies, showDetails: controller.showDetails)
-                        }
-                    } label: {
-                        Label("Megaplex", systemImage: "film")
+            TabView {
+                Tab {
+                    if controller.loading {
+                        ProgressView()
+                    } else {
+                        FCListDetailsSplitPane(movies: controller.movies, showDetails: controller.showDetails)
                     }
-                    Tab {
-                        FCUtahTheaterSchedule()
-                    } label: {
-                        Label("Utah Theater", systemImage: "theatermasks")
-                    }
+                } label: {
+                    Label("Megaplex", systemImage: "film")
                 }
+                Tab {
+                    FCUtahTheaterSchedule()
+                } label: {
+                    Label("Utah Theater", systemImage: "theatermasks")
+                }
+            }
         }
         .navigationTitle(APP_NAME)
         .toolbar {

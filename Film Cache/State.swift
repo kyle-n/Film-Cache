@@ -20,7 +20,7 @@ struct FCAppState {
     var selectedMovie: FCMovie? {
         movies.first { $0.id == selectedMovieID }
     }
-    
+
     var filteredMovies: [FCMovie] {
         guard let listQuery,
               listQuery != ""

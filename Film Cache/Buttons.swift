@@ -43,7 +43,7 @@ struct FCSearchButton: View {
         .help("Search (Cmd-F)")
         .keyboardShortcut("f", modifiers: .command)
     }
-    
+
     private func publishSearchNotification() {
         fcStore.dispatch(FCAction.searchStarted)
     }

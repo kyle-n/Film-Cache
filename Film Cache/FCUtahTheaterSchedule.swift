@@ -9,11 +9,14 @@ import SwiftUI
 
 struct FCUtahTheaterSchedule: View {
     @State private var scrollViewHeight: CGFloat?
-    
+
     var body: some View {
         GeometryReader { geo in
             ScrollView {
-                AsyncImage(url: FCUtahTheaterSchedule.scheduleURL, transaction: Transaction(animation: .snappy)) { phase in
+                AsyncImage(
+                    url: FCUtahTheaterSchedule.scheduleURL,
+                    transaction: Transaction(animation: .snappy)
+                ) { phase in
                     if let image = phase.image {
                         image
                             .resizable()
@@ -28,7 +31,7 @@ struct FCUtahTheaterSchedule: View {
             }
         }
     }
-    
+
     private var fullScreenLoader: some View {
         VStack {
             Spacer()
@@ -41,7 +44,7 @@ struct FCUtahTheaterSchedule: View {
         }
         .frame(height: scrollViewHeight)
     }
-    
+
     private static let scheduleURL = URL(string: "https://theutahtheatre.org/utah-festival-static-home-page.jpg")!
 }
 
