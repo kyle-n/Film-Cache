@@ -31,7 +31,10 @@ enum MegaplexConnector {
             "(Re-release)",
             "(Fathom \(currentYear))",
             "(Fathom \(currentYear - 1)",
-            "(Fathom \(currentYear + 1)"
+            "(Fathom \(currentYear + 1)",
+            "\(currentYear) Re-Release",
+            "\(currentYear - 1) Re-Release",
+            "\(currentYear + 1) Re-Release"
         ]
         var isRepScreening = false
         for indicator in repScreeningIndicators {
