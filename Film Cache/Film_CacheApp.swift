@@ -21,13 +21,14 @@ struct Film_CacheApp: App {
                 AboutAppButton(APP_NAME)
                 FCQuitButton()
             }
-            CommandGroup(before: .appVisibility) {
-                FCRefreshButton()
-                FCSearchButton()
-            }
-            CommandGroup(after: .toolbar) {
+            CommandGroup(before: .toolbar) {
                 FCPreviousTabButton()
                 FCNextTabButton()
+                Divider()
+            }
+            CommandMenu("Find") {
+                FCRefreshButton()
+                FCSearchButton()
             }
         }
     }
