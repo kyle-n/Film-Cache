@@ -36,13 +36,13 @@ struct ContentView: View {
             // https://www.reddit.com/r/SwiftUI/comments/1dt2bez/animated_transition_for_the_navigation_bar/
             ToolbarItemGroup {
                 HStack {
-                    FCRefreshButton()
+                    FCRefreshButton(showHelpText: true)
                     if controller.showSearchField {
                         FCSearchField()
                             .frame(width: 160)
                             .transition(.scale)
                     } else {
-                        FCSearchButton()
+                        FCSearchButton(showHelpText: true)
                     }
                 }
                 .animation(.snappy, value: controller.showSearchField)

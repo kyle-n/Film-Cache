@@ -7,19 +7,32 @@
 
 import SwiftUI
 
-protocol FCMenuButton {
+public protocol FCMenuButton {
     var title: String { get }
     func publishNotification() -> Void
 }
 
 struct FCRefreshButton: View, FCMenuButton {
-    internal let title: String = "Refresh"
+    internal let title = "Refresh"
+    private let showHelpText: Bool
+    
+    init(showHelpText: Bool = false) {
+        self.showHelpText = showHelpText
+    }
     
     var body: some View {
+        if showHelpText {
+            button
+                .help("\(title) (Cmd-R)")
+        } else {
+            button
+        }
+    }
+    
+    private var button: some View {
         Button(action: publishNotification) {
             Label(title, systemImage: "arrow.clockwise")
         }
-        .help("\(title) (Cmd-R)")
         .keyboardShortcut("r", modifiers: .command)
     }
 
@@ -35,7 +48,6 @@ struct FCQuitButton: View {
         Button(action: quit) {
             Text("\(title) \(APP_NAME)")
         }
-        .help("\(title) (Cmd-Q)")
         .keyboardShortcut("q", modifiers: .command)
     }
 
@@ -46,12 +58,25 @@ struct FCQuitButton: View {
 
 struct FCSearchButton: View, FCMenuButton {
     internal let title = "Search"
+    private let showHelpText: Bool
+    
+    init(showHelpText: Bool = false) {
+        self.showHelpText = showHelpText
+    }
     
     var body: some View {
+        if showHelpText {
+            button
+                .help("\(title) (Cmd-F)")
+        } else {
+            button
+        }
+    }
+    
+    private var button: some View {
         Button(action: publishNotification) {
             Label(title, systemImage: "magnifyingglass")
         }
-        .help("\(title) (Cmd-F)")
         .keyboardShortcut("f", modifiers: .command)
     }
 
@@ -67,7 +92,6 @@ struct FCNextTabButton: View, FCMenuButton {
         Button(action: publishNotification) {
             Label(title, systemImage: "chevron.right")
         }
-        .help("\(title) (Cmd-Shift-])")
         .keyboardShortcut("]", modifiers: [.command, .shift])
     }
     
@@ -83,7 +107,6 @@ struct FCPreviousTabButton: View, FCMenuButton {
         Button(action: publishNotification) {
             Label(title, systemImage: "chevron.left")
         }
-        .help("\(title) (Cmd-Shift-[)")
         .keyboardShortcut("[", modifiers: [.command, .shift])
     }
     
