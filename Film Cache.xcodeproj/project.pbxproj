@@ -11,18 +11,24 @@
 		9961980C2E8C13460045FCDB /* ReSwiftThunk in Frameworks */ = {isa = PBXBuildFile; productRef = 9961980B2E8C13460045FCDB /* ReSwiftThunk */; };
 		9961980F2E8C45570045FCDB /* NZSSystemExtensions in Frameworks */ = {isa = PBXBuildFile; productRef = 9961980E2E8C45570045FCDB /* NZSSystemExtensions */; };
 		99870A842EAC28C9004C82BE /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99870A742EAC28C9004C82BE /* Constants.swift */; };
+		99870A8B2EAC28C9004C82BE /* FCError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99870A772EAC28C9004C82BE /* FCError.swift */; };
 		99870A902EAC28C9004C82BE /* State.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99870A7F2EAC28C9004C82BE /* State.swift */; };
 		99870AAB2EAC2926004C82BE /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99870A742EAC28C9004C82BE /* Constants.swift */; };
 		99870AAE2EAC2926004C82BE /* State.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99870A7F2EAC28C9004C82BE /* State.swift */; };
 		99870AB82EAC2970004C82BE /* ReSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 99870AB72EAC2970004C82BE /* ReSwift */; };
 		99870ABA2EAC2970004C82BE /* ReSwiftThunk in Frameworks */ = {isa = PBXBuildFile; productRef = 99870AB92EAC2970004C82BE /* ReSwiftThunk */; };
+		99870ABE2EAC2A45004C82BE /* env.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99870ABD2EAC2A43004C82BE /* env.swift */; };
+		99870ABF2EAC2A45004C82BE /* env.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99870ABD2EAC2A43004C82BE /* env.swift */; };
+		99870AC02EAC2B75004C82BE /* FCError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99870A772EAC28C9004C82BE /* FCError.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		994351532E737F9200C5CEA2 /* Film Cache.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Film Cache.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		99870A062EAC27CF004C82BE /* Film Cache (iOS).app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Film Cache (iOS).app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		99870A742EAC28C9004C82BE /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		99870A772EAC28C9004C82BE /* FCError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FCError.swift; sourceTree = "<group>"; };
 		99870A7F2EAC28C9004C82BE /* State.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = State.swift; sourceTree = "<group>"; };
+		99870ABD2EAC2A43004C82BE /* env.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = env.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -152,11 +158,13 @@
 		99870A992EAC28D7004C82BE /* Shared */ = {
 			isa = PBXGroup;
 			children = (
+				99870ABD2EAC2A43004C82BE /* env.swift */,
 				99870A9C2EAC28F9004C82BE /* Connectors */,
 				99870A9E2EAC28F9004C82BE /* Mock Data */,
 				99870AA22EAC28F9004C82BE /* Types */,
 				99870A742EAC28C9004C82BE /* Constants.swift */,
 				99870A7F2EAC28C9004C82BE /* State.swift */,
+				99870A772EAC28C9004C82BE /* FCError.swift */,
 			);
 			path = Shared;
 			sourceTree = "<group>";
@@ -286,7 +294,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				99870ABF2EAC2A45004C82BE /* env.swift in Sources */,
 				99870A842EAC28C9004C82BE /* Constants.swift in Sources */,
+				99870A8B2EAC28C9004C82BE /* FCError.swift in Sources */,
 				99870A902EAC28C9004C82BE /* State.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -295,7 +305,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				99870ABE2EAC2A45004C82BE /* env.swift in Sources */,
 				99870AAB2EAC2926004C82BE /* Constants.swift in Sources */,
+				99870AC02EAC2B75004C82BE /* FCError.swift in Sources */,
 				99870AAE2EAC2926004C82BE /* State.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
