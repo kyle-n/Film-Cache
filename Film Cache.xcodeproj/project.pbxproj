@@ -14,6 +14,8 @@
 		99870A902EAC28C9004C82BE /* State.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99870A7F2EAC28C9004C82BE /* State.swift */; };
 		99870AAB2EAC2926004C82BE /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99870A742EAC28C9004C82BE /* Constants.swift */; };
 		99870AAE2EAC2926004C82BE /* State.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99870A7F2EAC28C9004C82BE /* State.swift */; };
+		99870AB82EAC2970004C82BE /* ReSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 99870AB72EAC2970004C82BE /* ReSwift */; };
+		99870ABA2EAC2970004C82BE /* ReSwiftThunk in Frameworks */ = {isa = PBXBuildFile; productRef = 99870AB92EAC2970004C82BE /* ReSwiftThunk */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -119,6 +121,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				99870ABA2EAC2970004C82BE /* ReSwiftThunk in Frameworks */,
+				99870AB82EAC2970004C82BE /* ReSwift in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -131,6 +135,7 @@
 				99870A992EAC28D7004C82BE /* Shared */,
 				994351552E737F9200C5CEA2 /* Film Cache */,
 				99870A072EAC27CF004C82BE /* Film Cache (iOS) */,
+				99870AB62EAC2970004C82BE /* Frameworks */,
 				994351542E737F9200C5CEA2 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -154,6 +159,13 @@
 				99870A7F2EAC28C9004C82BE /* State.swift */,
 			);
 			path = Shared;
+			sourceTree = "<group>";
+		};
+		99870AB62EAC2970004C82BE /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -202,6 +214,8 @@
 			);
 			name = "Film Cache (iOS)";
 			packageProductDependencies = (
+				99870AB72EAC2970004C82BE /* ReSwift */,
+				99870AB92EAC2970004C82BE /* ReSwiftThunk */,
 			);
 			productName = "Film Cache (iOS)";
 			productReference = 99870A062EAC27CF004C82BE /* Film Cache (iOS).app */;
@@ -610,6 +624,16 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 9961980D2E8C45570045FCDB /* XCRemoteSwiftPackageReference "SystemExtensions" */;
 			productName = NZSSystemExtensions;
+		};
+		99870AB72EAC2970004C82BE /* ReSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 996198042E8C0D3E0045FCDB /* XCRemoteSwiftPackageReference "ReSwift" */;
+			productName = ReSwift;
+		};
+		99870AB92EAC2970004C82BE /* ReSwiftThunk */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 9961980A2E8C13460045FCDB /* XCRemoteSwiftPackageReference "ReSwift-Thunk" */;
+			productName = ReSwiftThunk;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
