@@ -10,12 +10,34 @@
 		996198062E8C0D3E0045FCDB /* ReSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 996198052E8C0D3E0045FCDB /* ReSwift */; };
 		9961980C2E8C13460045FCDB /* ReSwiftThunk in Frameworks */ = {isa = PBXBuildFile; productRef = 9961980B2E8C13460045FCDB /* ReSwiftThunk */; };
 		9961980F2E8C45570045FCDB /* NZSSystemExtensions in Frameworks */ = {isa = PBXBuildFile; productRef = 9961980E2E8C45570045FCDB /* NZSSystemExtensions */; };
+		99870A842EAC28C9004C82BE /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99870A742EAC28C9004C82BE /* Constants.swift */; };
+		99870A902EAC28C9004C82BE /* State.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99870A7F2EAC28C9004C82BE /* State.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		994351532E737F9200C5CEA2 /* Film Cache.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Film Cache.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		99870A062EAC27CF004C82BE /* Film Cache (iOS).app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Film Cache (iOS).app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		99870A742EAC28C9004C82BE /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		99870A7F2EAC28C9004C82BE /* State.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = State.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		99870AA92EAC28F9004C82BE /* Exceptions for "Connectors" folder in "Film Cache" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				MegaplexConnector.swift,
+				TMDBConnector.swift,
+			);
+			target = 994351522E737F9200C5CEA2 /* Film Cache */;
+		};
+		99870AAA2EAC28F9004C82BE /* Exceptions for "Mock Data" folder in "Film Cache" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				MegaplexScheduledMovies.swift,
+			);
+			target = 994351522E737F9200C5CEA2 /* Film Cache */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		994351552E737F9200C5CEA2 /* Film Cache */ = {
@@ -26,6 +48,27 @@
 		99870A072EAC27CF004C82BE /* Film Cache (iOS) */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = "Film Cache (iOS)";
+			sourceTree = "<group>";
+		};
+		99870A9C2EAC28F9004C82BE /* Connectors */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				99870AA92EAC28F9004C82BE /* Exceptions for "Connectors" folder in "Film Cache" target */,
+			);
+			path = Connectors;
+			sourceTree = "<group>";
+		};
+		99870A9E2EAC28F9004C82BE /* Mock Data */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				99870AAA2EAC28F9004C82BE /* Exceptions for "Mock Data" folder in "Film Cache" target */,
+			);
+			path = "Mock Data";
+			sourceTree = "<group>";
+		};
+		99870AA22EAC28F9004C82BE /* Types */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = Types;
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
@@ -54,6 +97,7 @@
 		9943514A2E737F9200C5CEA2 = {
 			isa = PBXGroup;
 			children = (
+				99870A992EAC28D7004C82BE /* Shared */,
 				994351552E737F9200C5CEA2 /* Film Cache */,
 				99870A072EAC27CF004C82BE /* Film Cache (iOS) */,
 				994351542E737F9200C5CEA2 /* Products */,
@@ -67,6 +111,18 @@
 				99870A062EAC27CF004C82BE /* Film Cache (iOS).app */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		99870A992EAC28D7004C82BE /* Shared */ = {
+			isa = PBXGroup;
+			children = (
+				99870A9C2EAC28F9004C82BE /* Connectors */,
+				99870A9E2EAC28F9004C82BE /* Mock Data */,
+				99870AA22EAC28F9004C82BE /* Types */,
+				99870A742EAC28C9004C82BE /* Constants.swift */,
+				99870A7F2EAC28C9004C82BE /* State.swift */,
+			);
+			path = Shared;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -86,6 +142,7 @@
 			);
 			fileSystemSynchronizedGroups = (
 				994351552E737F9200C5CEA2 /* Film Cache */,
+				99870AA22EAC28F9004C82BE /* Types */,
 			);
 			name = "Film Cache";
 			packageProductDependencies = (
@@ -184,6 +241,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				99870A842EAC28C9004C82BE /* Constants.swift in Sources */,
+				99870A902EAC28C9004C82BE /* State.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
