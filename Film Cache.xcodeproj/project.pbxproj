@@ -12,6 +12,8 @@
 		9961980F2E8C45570045FCDB /* NZSSystemExtensions in Frameworks */ = {isa = PBXBuildFile; productRef = 9961980E2E8C45570045FCDB /* NZSSystemExtensions */; };
 		99870A842EAC28C9004C82BE /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99870A742EAC28C9004C82BE /* Constants.swift */; };
 		99870A902EAC28C9004C82BE /* State.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99870A7F2EAC28C9004C82BE /* State.swift */; };
+		99870AAB2EAC2926004C82BE /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99870A742EAC28C9004C82BE /* Constants.swift */; };
+		99870AAE2EAC2926004C82BE /* State.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99870A7F2EAC28C9004C82BE /* State.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -37,6 +39,30 @@
 			);
 			target = 994351522E737F9200C5CEA2 /* Film Cache */;
 		};
+		99870AB32EAC2927004C82BE /* Exceptions for "Types" folder in "Film Cache (iOS)" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				FCMovie.swift,
+				Megaplex.swift,
+				TMDB.swift,
+			);
+			target = 99870A052EAC27CF004C82BE /* Film Cache (iOS) */;
+		};
+		99870AB42EAC2927004C82BE /* Exceptions for "Connectors" folder in "Film Cache (iOS)" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				MegaplexConnector.swift,
+				TMDBConnector.swift,
+			);
+			target = 99870A052EAC27CF004C82BE /* Film Cache (iOS) */;
+		};
+		99870AB52EAC2927004C82BE /* Exceptions for "Mock Data" folder in "Film Cache (iOS)" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				MegaplexScheduledMovies.swift,
+			);
+			target = 99870A052EAC27CF004C82BE /* Film Cache (iOS) */;
+		};
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -54,6 +80,7 @@
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
 				99870AA92EAC28F9004C82BE /* Exceptions for "Connectors" folder in "Film Cache" target */,
+				99870AB42EAC2927004C82BE /* Exceptions for "Connectors" folder in "Film Cache (iOS)" target */,
 			);
 			path = Connectors;
 			sourceTree = "<group>";
@@ -62,12 +89,16 @@
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
 				99870AAA2EAC28F9004C82BE /* Exceptions for "Mock Data" folder in "Film Cache" target */,
+				99870AB52EAC2927004C82BE /* Exceptions for "Mock Data" folder in "Film Cache (iOS)" target */,
 			);
 			path = "Mock Data";
 			sourceTree = "<group>";
 		};
 		99870AA22EAC28F9004C82BE /* Types */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				99870AB32EAC2927004C82BE /* Exceptions for "Types" folder in "Film Cache (iOS)" target */,
+			);
 			path = Types;
 			sourceTree = "<group>";
 		};
@@ -250,6 +281,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				99870AAB2EAC2926004C82BE /* Constants.swift in Sources */,
+				99870AAE2EAC2926004C82BE /* State.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
