@@ -14,12 +14,18 @@
 
 /* Begin PBXFileReference section */
 		994351532E737F9200C5CEA2 /* Film Cache.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Film Cache.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		99870A062EAC27CF004C82BE /* Film Cache (iOS).app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Film Cache (iOS).app"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		994351552E737F9200C5CEA2 /* Film Cache */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = "Film Cache";
+			sourceTree = "<group>";
+		};
+		99870A072EAC27CF004C82BE /* Film Cache (iOS) */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = "Film Cache (iOS)";
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
@@ -35,6 +41,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		99870A032EAC27CF004C82BE /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -42,6 +55,7 @@
 			isa = PBXGroup;
 			children = (
 				994351552E737F9200C5CEA2 /* Film Cache */,
+				99870A072EAC27CF004C82BE /* Film Cache (iOS) */,
 				994351542E737F9200C5CEA2 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -50,6 +64,7 @@
 			isa = PBXGroup;
 			children = (
 				994351532E737F9200C5CEA2 /* Film Cache.app */,
+				99870A062EAC27CF004C82BE /* Film Cache (iOS).app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -82,6 +97,28 @@
 			productReference = 994351532E737F9200C5CEA2 /* Film Cache.app */;
 			productType = "com.apple.product-type.application";
 		};
+		99870A052EAC27CF004C82BE /* Film Cache (iOS) */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 99870A102EAC27D1004C82BE /* Build configuration list for PBXNativeTarget "Film Cache (iOS)" */;
+			buildPhases = (
+				99870A022EAC27CF004C82BE /* Sources */,
+				99870A032EAC27CF004C82BE /* Frameworks */,
+				99870A042EAC27CF004C82BE /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				99870A072EAC27CF004C82BE /* Film Cache (iOS) */,
+			);
+			name = "Film Cache (iOS)";
+			packageProductDependencies = (
+			);
+			productName = "Film Cache (iOS)";
+			productReference = 99870A062EAC27CF004C82BE /* Film Cache (iOS).app */;
+			productType = "com.apple.product-type.application";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -93,6 +130,9 @@
 				LastUpgradeCheck = 1640;
 				TargetAttributes = {
 					994351522E737F9200C5CEA2 = {
+						CreatedOnToolsVersion = 16.4;
+					};
+					99870A052EAC27CF004C82BE = {
 						CreatedOnToolsVersion = 16.4;
 					};
 				};
@@ -117,6 +157,7 @@
 			projectRoot = "";
 			targets = (
 				994351522E737F9200C5CEA2 /* Film Cache */,
+				99870A052EAC27CF004C82BE /* Film Cache (iOS) */,
 			);
 		};
 /* End PBXProject section */
@@ -129,10 +170,24 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		99870A042EAC27CF004C82BE /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		9943514F2E737F9200C5CEA2 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		99870A022EAC27CF004C82BE /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -318,6 +373,77 @@
 			};
 			name = Release;
 		};
+		99870A0E2EAC27D1004C82BE /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = AU576FY884;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.entertainment";
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 18.5;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.nazariosoftware.Film-Cache--iOS-";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Debug;
+		};
+		99870A0F2EAC27D1004C82BE /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = AU576FY884;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.entertainment";
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 18.5;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.nazariosoftware.Film-Cache--iOS-";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -335,6 +461,15 @@
 			buildConfigurations = (
 				994351602E737F9300C5CEA2 /* Debug */,
 				994351612E737F9300C5CEA2 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		99870A102EAC27D1004C82BE /* Build configuration list for PBXNativeTarget "Film Cache (iOS)" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				99870A0E2EAC27D1004C82BE /* Debug */,
+				99870A0F2EAC27D1004C82BE /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
