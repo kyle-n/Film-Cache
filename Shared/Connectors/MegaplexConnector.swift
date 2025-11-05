@@ -29,6 +29,7 @@ enum MegaplexConnector {
         let repScreeningIndicators = [
             "MegaReelDeal",
             "(Re-release)",
+            "Re-Release",
             "(Fathom \(currentYear))",
             "(Fathom \(currentYear - 1)",
             "(Fathom \(currentYear + 1)",
@@ -46,7 +47,9 @@ enum MegaplexConnector {
 
         let deletables = repScreeningIndicators + [
             "-Dub",
-            "-Sub"
+            "-Sub",
+            "(Dubbed)",
+            "(Subtitled)"
         ]
         var normalizedTitle = title
         for deletable in deletables {
