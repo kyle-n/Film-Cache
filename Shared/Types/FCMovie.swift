@@ -11,7 +11,6 @@ struct FCMovie: Identifiable {
     let id: String
     let megaplexFilmId: String?
     let title: String
-    let posterURL: URL?
     let openingDate: Date
     let runTimeMinutes: Int
     let distributor: String
@@ -46,7 +45,6 @@ extension [FCMovie] {
                 id: movie.id,
                 megaplexFilmId: movie.megaplexFilmId,
                 title: movie.title,
-                posterURL: movie.posterURL,
                 openingDate: movie.openingDate,
                 runTimeMinutes: movie.runTimeMinutes,
                 distributor: movie.distributor,
