@@ -83,7 +83,7 @@ let mockMovieCaughtStealing = MegaplexScheduledMovie(
     displaySequence: 50,
     twitterTag: "Caught Stealing",
     hasSessionsAvailable: true,
-    graphicUrl: "",
+    graphicUrl: "https://image.tmdb.org/t/p/w500/cvda8s5J8YaHjTyEyXQpvD6f3iV.jpg",
     cinemaName: "Providence",
     cinemaNameAlt: "",
     allowTicketSales: true,

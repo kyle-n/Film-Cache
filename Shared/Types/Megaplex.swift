@@ -66,6 +66,7 @@ struct MegaplexScheduledMovie: Codable, Identifiable, Equatable {
             id: id,
             megaplexFilmId: scheduledFilmId,
             title: title,
+            posterURL: graphicUrl.isEmpty ? nil : URL(string: graphicUrl),
             openingDate: openingDate,
             runTimeMinutes: runTimeMinutes,
             distributor: distributor,

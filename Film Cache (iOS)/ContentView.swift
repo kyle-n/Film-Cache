@@ -37,7 +37,6 @@ struct ContentView: View {
 final class ContentViewController: ObservableObject, StoreSubscriber {
     @Published private(set) var movies: [FCMovie] = []
     @Published private(set) var loading = false
-    @Published private(set) var showDetails = false
     @Published var query: String = ""
     @Published private(set) var showSearchField = false
     @Published var selectedTab: FCAppState.TabOption = .megaplex {
@@ -63,7 +62,6 @@ final class ContentViewController: ObservableObject, StoreSubscriber {
         DispatchQueue.main.async {
             self.movies = state.filteredMovies
             self.loading = state.loadingMovies
-            self.showDetails = state.selectedMovieID != nil
             if let listQuery = state.listQuery {
                 self.query = listQuery
             }
