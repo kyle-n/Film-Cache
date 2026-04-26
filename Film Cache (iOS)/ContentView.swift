@@ -12,13 +12,13 @@ struct ContentView: View {
     @StateObject() private var controller = ContentViewController()
     
     var body: some View {
-        Group {
+        NavigationStack {
             TabView(selection: $controller.selectedTab) {
                 Tab(value: FCAppState.TabOption.megaplex) {
                     if controller.loading {
                         ProgressView()
                     } else {
-                        Text("worked")
+                        FCMovieList(movies: controller.movies)
                     }
                 } label: {
                     Label("Megaplex", systemImage: "film")

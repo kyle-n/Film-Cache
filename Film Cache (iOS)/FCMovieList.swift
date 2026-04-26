@@ -5,18 +5,67 @@
 //  Created by Kyle Nazario on 4/26/26.
 //
 
+import ReSwift
 import SwiftUI
 
 struct FCMovieList: View {
     let movies: [FCMovie]
-    
+
+    @StateObject private var controller = FCMovieListController()
+
     var body: some View {
         List(movies) { movie in
-            FCMovieCard(movie: movie)
-                .listRowSeparator(.hidden)
-                .listRowInsets(EdgeInsets(top: 8, leading: 16, bottom: 8, trailing: 16))
+            Button {
+                controller.movieTapped(movie)
+            } label: {
+                FCMovieCard(movie: movie)
+            }
+            .buttonStyle(.plain)
+            .listRowSeparator(.hidden)
+            .listRowInsets(EdgeInsets(top: 8, leading: 16, bottom: 8, trailing: 16))
         }
         .listStyle(.plain)
+        .navigationDestination(isPresented: detailsPresented) {
+            FCMovieDetails()
+        }
+    }
+
+    private var detailsPresented: Binding<Bool> {
+        Binding {
+            controller.showMovieDetails
+        } set: { isPresented in
+            if !isPresented {
+                controller.movieDetailsDismissed()
+            }
+        }
+    }
+}
+
+private final class FCMovieListController: ObservableObject, StoreSubscriber {
+    @Published private(set) var showMovieDetails = false
+
+    init() {
+        DispatchQueue.main.async {
+            fcStore.subscribe(self)
+        }
+    }
+
+    deinit {
+        fcStore.unsubscribe(self)
+    }
+
+    func movieTapped(_ movie: FCMovie) {
+        fcStore.dispatch(FCAction.movieSelected(id: movie.id))
+    }
+
+    func movieDetailsDismissed() {
+        fcStore.dispatch(FCAction.movieDeselected)
+    }
+
+    func newState(state: FCAppState) {
+        DispatchQueue.main.async {
+            self.showMovieDetails = state.movieDetails != nil
+        }
     }
 }
 
