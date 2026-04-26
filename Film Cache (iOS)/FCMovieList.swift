@@ -14,19 +14,26 @@ struct FCMovieList: View {
     @StateObject private var controller = FCMovieListController()
 
     var body: some View {
-        List(movies) { movie in
-            Button {
-                controller.movieTapped(movie)
-            } label: {
-                FCMovieCard(movie: movie)
+        VStack {
+            List {
+                Text(APP_NAME)
+                    .font(.largeTitle)
+                    .bold()
+                ForEach(movies) { movie in
+                    Button {
+                        controller.movieTapped(movie)
+                    } label: {
+                        FCMovieCard(movie: movie)
+                    }
+                    .buttonStyle(.plain)
+                    .listRowSeparator(.hidden)
+                    .listRowInsets(EdgeInsets(top: 8, leading: 16, bottom: 8, trailing: 16))
+                }
             }
-            .buttonStyle(.plain)
-            .listRowSeparator(.hidden)
-            .listRowInsets(EdgeInsets(top: 8, leading: 16, bottom: 8, trailing: 16))
-        }
-        .listStyle(.plain)
-        .navigationDestination(isPresented: detailsPresented) {
-            FCMovieDetails()
+            .listStyle(.plain)
+            .navigationDestination(isPresented: detailsPresented) {
+                FCMovieDetails()
+            }
         }
     }
 
@@ -84,12 +91,43 @@ private struct FCMovieCard: View {
                 .font(.subheadline)
                 .foregroundStyle(.secondary)
                 .lineLimit(2)
+
+            if !nextScreeningWeekdays.isEmpty {
+                Text(nextScreeningWeekdays.joined(separator: ", "))
+                    .font(.subheadline)
+                    .foregroundStyle(.secondary)
+                    .lineLimit(2)
+            }
         }
         .padding(12)
         .frame(maxWidth: .infinity, alignment: .leading)
         .background(.background)
         .clipShape(RoundedRectangle(cornerRadius: 8))
         .shadow(color: .black.opacity(0.12), radius: 8, x: 0, y: 3)
+    }
+
+    private var nextScreeningWeekdays: [String] {
+        let calendar = Calendar.current
+        let today = calendar.startOfDay(for: Date())
+        let screeningDays = movie.screenings
+            .map { calendar.startOfDay(for: $0.time) }
+            .filter { $0 >= today }
+            .sorted()
+
+        var uniqueDays: [Date] = []
+        for day in screeningDays {
+            guard !uniqueDays.contains(where: { calendar.isDate($0, inSameDayAs: day) }) else {
+                continue
+            }
+            uniqueDays.append(day)
+            if uniqueDays.count == 3 {
+                break
+            }
+        }
+
+        let formatter = DateFormatter()
+        formatter.dateFormat = "EEEE"
+        return uniqueDays.map { formatter.string(from: $0) }
     }
 }
 

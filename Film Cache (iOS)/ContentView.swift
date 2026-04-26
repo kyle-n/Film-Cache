@@ -30,7 +30,6 @@ struct ContentView: View {
                 }
             }
         }
-        .navigationTitle(APP_NAME)
     }
 }
 
