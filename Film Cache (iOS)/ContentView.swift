@@ -24,7 +24,7 @@ struct ContentView: View {
                     Label("Megaplex", systemImage: "film")
                 }
                 Tab(value: FCAppState.TabOption.utahTheater) {
-                    Text("UTT")
+                    FCUtahTheaterSchedule()
                 } label: {
                     Label("Utah Theater", systemImage: "theatermasks")
                 }
