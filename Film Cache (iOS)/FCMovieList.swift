@@ -79,6 +79,8 @@ private final class FCMovieListController: ObservableObject, StoreSubscriber {
 private struct FCMovieCard: View {
     let movie: FCMovie
 
+    @Environment(\.colorScheme) private var colorScheme
+
     var body: some View {
         VStack(alignment: .leading, spacing: 12) {
             Text(movie.title)
@@ -101,9 +103,25 @@ private struct FCMovieCard: View {
         }
         .padding(12)
         .frame(maxWidth: .infinity, alignment: .leading)
-        .background(.background)
+        .background(cardBackground)
+        .overlay {
+            RoundedRectangle(cornerRadius: 8)
+                .stroke(cardBorder, lineWidth: 1)
+        }
         .clipShape(RoundedRectangle(cornerRadius: 8))
-        .shadow(color: .black.opacity(0.12), radius: 8, x: 0, y: 3)
+        .shadow(color: shadowColor, radius: 8, x: 0, y: 3)
+    }
+
+    private var cardBackground: Color {
+        colorScheme == .dark ? Color(.secondarySystemBackground) : Color(.systemBackground)
+    }
+
+    private var cardBorder: Color {
+        colorScheme == .dark ? .white.opacity(0.18) : .black.opacity(0.08)
+    }
+
+    private var shadowColor: Color {
+        colorScheme == .dark ? .black.opacity(0.65) : .black.opacity(0.12)
     }
 
     private var nextScreeningWeekdays: [String] {
