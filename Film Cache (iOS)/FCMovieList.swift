@@ -12,6 +12,7 @@ struct FCMovieList: View {
     let movies: [FCMovie]
 
     @StateObject private var controller = FCMovieListController()
+    @State private var dragging = false
 
     var body: some View {
         VStack {
@@ -31,10 +32,29 @@ struct FCMovieList: View {
                 }
             }
             .listStyle(.plain)
+            .simultaneousGesture(
+                DragGesture()
+                    .onChanged { _ in
+                        dragging = true
+                    }
+                    .onEnded { _ in
+                        dragging = false
+                    }
+            )
+            .refreshable {
+                await refreshMoviesAfterDragEnds()
+            }
             .navigationDestination(isPresented: detailsPresented) {
                 FCMovieDetails()
             }
         }
+    }
+
+    private func refreshMoviesAfterDragEnds() async {
+        while dragging {
+            try? await Task.sleep(for: .milliseconds(50))
+        }
+        controller.refreshMovies()
     }
 
     private var detailsPresented: Binding<Bool> {
@@ -63,6 +83,10 @@ private final class FCMovieListController: ObservableObject, StoreSubscriber {
 
     func movieTapped(_ movie: FCMovie) {
         fcStore.dispatch(FCAction.movieSelected(id: movie.id))
+    }
+
+    func refreshMovies() {
+        fcStore.dispatch(FCAction.movieListRefreshed())
     }
 
     func movieDetailsDismissed() {
