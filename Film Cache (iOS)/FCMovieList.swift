@@ -20,7 +20,7 @@ struct FCMovieList: View {
                 Text(APP_NAME)
                     .font(.largeTitle)
                     .bold()
-                ForEach(movies) { movie in
+                ForEach(sortedMovies) { movie in
                     Button {
                         controller.movieTapped(movie)
                     } label: {
@@ -50,6 +50,28 @@ struct FCMovieList: View {
         }
     }
 
+    private var sortedMovies: [FCMovie] {
+        let now = Date()
+        return movies.sorted { lhs, rhs in
+            let lhsNextScreening = lhs.nextScreeningTime(after: now)
+            let rhsNextScreening = rhs.nextScreeningTime(after: now)
+
+            switch (lhsNextScreening, rhsNextScreening) {
+            case let (lhsNextScreening?, rhsNextScreening?):
+                if lhsNextScreening != rhsNextScreening {
+                    return lhsNextScreening < rhsNextScreening
+                }
+                return lhs.title.localizedStandardCompare(rhs.title) == .orderedAscending
+            case (_?, nil):
+                return true
+            case (nil, _?):
+                return false
+            case (nil, nil):
+                return lhs.title.localizedStandardCompare(rhs.title) == .orderedAscending
+            }
+        }
+    }
+
     private func refreshMoviesAfterDragEnds() async {
         while dragging {
             try? await Task.sleep(for: .milliseconds(50))
@@ -65,6 +87,15 @@ struct FCMovieList: View {
                 controller.movieDetailsDismissed()
             }
         }
+    }
+}
+
+private extension FCMovie {
+    func nextScreeningTime(after referenceDate: Date) -> Date? {
+        screenings
+            .map(\.time)
+            .filter { $0 >= referenceDate }
+            .min()
     }
 }
 
