@@ -168,6 +168,9 @@ private struct FCMovieCard: View {
                             if hasMegaMarathonBadge {
                                 FCMovieBadge(text: megaMarathonBadgeText, color: .blue)
                             }
+                            if hasFanEventBadge {
+                                FCMovieBadge(text: fanEventBadgeText, color: .purple)
+                            }
                         }
                     }
                 }
@@ -208,8 +211,12 @@ private struct FCMovieCard: View {
         "MegaMarathon"
     }
 
+    private var fanEventBadgeText: String {
+        "Fan Event"
+    }
+
     private var hasBadges: Bool {
-        hasMegaReelDealBadge || hasEarlyAccessBadge || hasMegaMarathonBadge
+        hasMegaReelDealBadge || hasEarlyAccessBadge || hasMegaMarathonBadge || hasFanEventBadge
     }
 
     private var hasMegaReelDealBadge: Bool {
@@ -222,6 +229,10 @@ private struct FCMovieCard: View {
 
     private var hasMegaMarathonBadge: Bool {
         movie.title.range(of: megaMarathonPattern, options: [.regularExpression, .caseInsensitive]) != nil
+    }
+
+    private var hasFanEventBadge: Bool {
+        movie.title.range(of: fanEventPattern, options: [.regularExpression, .caseInsensitive]) != nil
     }
 
     private var displayTitle: String {
@@ -241,6 +252,11 @@ private struct FCMovieCard: View {
                 with: "",
                 options: [.regularExpression, .caseInsensitive]
             )
+            .replacingOccurrences(
+                of: fanEventPattern,
+                with: "",
+                options: [.regularExpression, .caseInsensitive]
+            )
             .replacingOccurrences(of: "\\s{2,}", with: " ", options: .regularExpression)
             .trimmingCharacters(in: .whitespacesAndNewlines)
     }
@@ -255,6 +271,10 @@ private struct FCMovieCard: View {
 
     private var megaMarathonPattern: String {
         "MegaMarathon"
+    }
+
+    private var fanEventPattern: String {
+        "Fan Event"
     }
 
     private var nextScreeningWeekdays: [String] {
