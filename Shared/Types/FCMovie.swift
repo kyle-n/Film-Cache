@@ -66,6 +66,22 @@ struct FCScreening: Identifiable {
     let time: Date
 }
 
+extension Date {
+    func fcShowtimeDayLabel(relativeTo referenceDate: Date = Date(), calendar: Calendar = .current) -> String {
+        let startOfReferenceDay = calendar.startOfDay(for: referenceDate)
+        let startOfDate = calendar.startOfDay(for: self)
+        let weekdayCutoff = calendar.date(byAdding: .day, value: 6, to: startOfReferenceDay) ?? startOfReferenceDay
+
+        let formatter = DateFormatter()
+        if startOfDate >= startOfReferenceDay && startOfDate <= weekdayCutoff {
+            formatter.dateFormat = "EEEE"
+        } else {
+            formatter.dateFormat = "MMMM d"
+        }
+        return formatter.string(from: self)
+    }
+}
+
 enum FCTheater: String, CaseIterable {
     // Megaplex cases use their internal IDs
     case MegaplexProvidence = "0010"

@@ -264,9 +264,7 @@ private struct FCTheaterScreeningDisclosure: View {
             return "Tomorrow"
         }
 
-        let formatter = DateFormatter()
-        formatter.dateFormat = "E, MMM. d"
-        return formatter.string(from: date)
+        return date.fcShowtimeDayLabel()
     }
 
     private func formattedTime(_ date: Date) -> String {

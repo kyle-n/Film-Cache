@@ -156,20 +156,26 @@ private struct FCMovieCard: View {
             .filter { $0 >= today }
             .sorted()
 
+        let weekdayCutoff = calendar.date(byAdding: .day, value: 6, to: today) ?? today
         var uniqueDays: [Date] = []
+        var labels: [String] = []
         for day in screeningDays {
             guard !uniqueDays.contains(where: { calendar.isDate($0, inSameDayAs: day) }) else {
                 continue
             }
             uniqueDays.append(day)
-            if uniqueDays.count == 3 {
+
+            if day > weekdayCutoff {
+                return labels.isEmpty ? [day.fcShowtimeDayLabel(relativeTo: today, calendar: calendar)] : labels
+            }
+
+            labels.append(day.fcShowtimeDayLabel(relativeTo: today, calendar: calendar))
+            if labels.count == 3 {
                 break
             }
         }
 
-        let formatter = DateFormatter()
-        formatter.dateFormat = "EEEE"
-        return uniqueDays.map { formatter.string(from: $0) }
+        return labels
     }
 }
 
