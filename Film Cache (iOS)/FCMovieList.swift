@@ -138,7 +138,7 @@ private struct FCMovieCard: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: 12) {
-            Text(movie.title)
+            Text(displayTitle)
                 .font(.title2)
                 .bold()
                 .lineLimit(2)
@@ -150,10 +150,17 @@ private struct FCMovieCard: View {
                 .lineLimit(2)
 
             if !nextScreeningWeekdays.isEmpty {
-                Text(nextScreeningWeekdays.joined(separator: ", "))
-                    .font(.subheadline)
-                    .foregroundStyle(.secondary)
-                    .lineLimit(2)
+                HStack(alignment: .firstTextBaseline, spacing: 8) {
+                    Text(nextScreeningWeekdays.joined(separator: ", "))
+                        .font(.subheadline)
+                        .foregroundStyle(.secondary)
+                        .lineLimit(2)
+
+                    if hasMegaReelDealBadge {
+                        Spacer(minLength: 8)
+                        FCMovieBadge(text: megaReelDealBadgeText, color: .green)
+                    }
+                }
             }
         }
         .padding(12)
@@ -177,6 +184,25 @@ private struct FCMovieCard: View {
 
     private var shadowColor: Color {
         colorScheme == .dark ? .black.opacity(0.65) : .black.opacity(0.12)
+    }
+
+    private var megaReelDealBadgeText: String {
+        "MegaReelDeal"
+    }
+
+    private var hasMegaReelDealBadge: Bool {
+        movie.title.range(of: megaReelDealBadgeText, options: [.caseInsensitive, .diacriticInsensitive]) != nil
+    }
+
+    private var displayTitle: String {
+        movie.title
+            .replacingOccurrences(
+                of: megaReelDealBadgeText,
+                with: "",
+                options: [.caseInsensitive, .diacriticInsensitive]
+            )
+            .replacingOccurrences(of: "\\s{2,}", with: " ", options: .regularExpression)
+            .trimmingCharacters(in: .whitespacesAndNewlines)
     }
 
     private var nextScreeningWeekdays: [String] {
@@ -207,6 +233,24 @@ private struct FCMovieCard: View {
         }
 
         return labels
+    }
+}
+
+private struct FCMovieBadge: View {
+    let text: String
+    let color: Color
+
+    var body: some View {
+        Text(text)
+            .font(.caption2)
+            .fontWeight(.semibold)
+            .foregroundStyle(.white)
+            .padding(.horizontal, 6)
+            .padding(.vertical, 2)
+            .background(
+                Capsule()
+                    .fill(color)
+            )
     }
 }
 
