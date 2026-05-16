@@ -191,18 +191,22 @@ private struct FCMovieCard: View {
     }
 
     private var hasMegaReelDealBadge: Bool {
-        movie.title.range(of: megaReelDealBadgeText, options: [.caseInsensitive, .diacriticInsensitive]) != nil
+        movie.title.range(of: megaReelDealPattern, options: [.regularExpression, .caseInsensitive]) != nil
     }
 
     private var displayTitle: String {
         movie.title
             .replacingOccurrences(
-                of: megaReelDealBadgeText,
+                of: megaReelDealPattern,
                 with: "",
-                options: [.caseInsensitive, .diacriticInsensitive]
+                options: [.regularExpression, .caseInsensitive]
             )
             .replacingOccurrences(of: "\\s{2,}", with: " ", options: .regularExpression)
             .trimmingCharacters(in: .whitespacesAndNewlines)
+    }
+
+    private var megaReelDealPattern: String {
+        "MegaReel\\s?Deal"
     }
 
     private var nextScreeningWeekdays: [String] {
