@@ -72,6 +72,15 @@ extension Date {
         let startOfDate = calendar.startOfDay(for: self)
         let weekdayCutoff = calendar.date(byAdding: .day, value: 6, to: startOfReferenceDay) ?? startOfReferenceDay
 
+        if calendar.isDate(startOfDate, inSameDayAs: startOfReferenceDay) {
+            return "Today"
+        }
+
+        if let tomorrow = calendar.date(byAdding: .day, value: 1, to: startOfReferenceDay),
+           calendar.isDate(startOfDate, inSameDayAs: tomorrow) {
+            return "Tomorrow"
+        }
+
         let formatter = DateFormatter()
         if startOfDate >= startOfReferenceDay && startOfDate <= weekdayCutoff {
             formatter.dateFormat = "EEEE"
