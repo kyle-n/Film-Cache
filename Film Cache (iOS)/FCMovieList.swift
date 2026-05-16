@@ -156,9 +156,19 @@ private struct FCMovieCard: View {
                         .foregroundStyle(.secondary)
                         .lineLimit(2)
 
-                    if hasMegaReelDealBadge {
+                    if hasBadges {
                         Spacer(minLength: 8)
-                        FCMovieBadge(text: megaReelDealBadgeText, color: .green)
+                        HStack(spacing: 6) {
+                            if hasEarlyAccessBadge {
+                                FCMovieBadge(text: earlyAccessBadgeText, color: .pink)
+                            }
+                            if hasMegaReelDealBadge {
+                                FCMovieBadge(text: megaReelDealBadgeText, color: .green)
+                            }
+                            if hasMegaMarathonBadge {
+                                FCMovieBadge(text: megaMarathonBadgeText, color: .blue)
+                            }
+                        }
                     }
                 }
             }
@@ -190,8 +200,28 @@ private struct FCMovieCard: View {
         "MegaReelDeal"
     }
 
+    private var earlyAccessBadgeText: String {
+        "Early Access"
+    }
+
+    private var megaMarathonBadgeText: String {
+        "MegaMarathon"
+    }
+
+    private var hasBadges: Bool {
+        hasMegaReelDealBadge || hasEarlyAccessBadge || hasMegaMarathonBadge
+    }
+
     private var hasMegaReelDealBadge: Bool {
         movie.title.range(of: megaReelDealPattern, options: [.regularExpression, .caseInsensitive]) != nil
+    }
+
+    private var hasEarlyAccessBadge: Bool {
+        movie.title.range(of: earlyAccessPattern, options: [.regularExpression, .caseInsensitive]) != nil
+    }
+
+    private var hasMegaMarathonBadge: Bool {
+        movie.title.range(of: megaMarathonPattern, options: [.regularExpression, .caseInsensitive]) != nil
     }
 
     private var displayTitle: String {
@@ -201,12 +231,30 @@ private struct FCMovieCard: View {
                 with: "",
                 options: [.regularExpression, .caseInsensitive]
             )
+            .replacingOccurrences(
+                of: earlyAccessPattern,
+                with: "",
+                options: [.regularExpression, .caseInsensitive]
+            )
+            .replacingOccurrences(
+                of: megaMarathonPattern,
+                with: "",
+                options: [.regularExpression, .caseInsensitive]
+            )
             .replacingOccurrences(of: "\\s{2,}", with: " ", options: .regularExpression)
             .trimmingCharacters(in: .whitespacesAndNewlines)
     }
 
     private var megaReelDealPattern: String {
         "MegaReel\\s?Deal"
+    }
+
+    private var earlyAccessPattern: String {
+        ":?\\s*Early Access Screening"
+    }
+
+    private var megaMarathonPattern: String {
+        "MegaMarathon"
     }
 
     private var nextScreeningWeekdays: [String] {
