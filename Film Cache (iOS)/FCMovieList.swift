@@ -15,12 +15,32 @@ struct FCMovieList: View {
     @State private var dragging = false
 
     var body: some View {
+        let now = Date()
+        let orderedMovies = sortedMovies(after: now)
+        let cutoff = Calendar.current.date(byAdding: .day, value: 30, to: now) ?? now
+        let firstDistantMovieIndex = orderedMovies.firstIndex { movie in
+            guard let nextScreening = movie.nextScreeningTime(after: now) else { return false }
+            return nextScreening > cutoff
+        }
+        let dividerMovieID = firstDistantMovieIndex.flatMap { index in
+            index > 0 ? orderedMovies[index].id : nil
+        }
+
         VStack {
             List {
                 Text(APP_NAME)
                     .font(.largeTitle)
                     .bold()
-                ForEach(sortedMovies) { movie in
+                ForEach(orderedMovies) { movie in
+                    if movie.id == dividerMovieID {
+                        VStack {
+                            Divider()
+                        }
+                        .frame(maxWidth: .infinity)
+                        .padding(.vertical, 16)
+                        .listRowSeparator(.hidden)
+                        .listRowInsets(EdgeInsets(top: 0, leading: 16, bottom: 0, trailing: 16))
+                    }
                     Button {
                         controller.movieTapped(movie)
                     } label: {
@@ -50,8 +70,7 @@ struct FCMovieList: View {
         }
     }
 
-    private var sortedMovies: [FCMovie] {
-        let now = Date()
+    private func sortedMovies(after now: Date) -> [FCMovie] {
         return movies.sorted { lhs, rhs in
             let lhsNextScreening = lhs.nextScreeningTime(after: now)
             let rhsNextScreening = rhs.nextScreeningTime(after: now)
@@ -162,6 +181,9 @@ private struct FCMovieCard: View {
                             if hasEarlyAccessBadge {
                                 FCMovieBadge(text: earlyAccessBadgeText, color: .pink)
                             }
+                            if hasInsiderBadge {
+                                FCMovieBadge(text: insiderBadgeText, color: .blue)
+                            }
                             if hasMegaReelDealBadge {
                                 FCMovieBadge(text: megaReelDealBadgeText, color: .green)
                             }
@@ -207,6 +229,10 @@ private struct FCMovieCard: View {
         "Early Access"
     }
 
+    private var insiderBadgeText: String {
+        "Insider"
+    }
+
     private var megaMarathonBadgeText: String {
         "MegaMarathon"
     }
@@ -216,7 +242,7 @@ private struct FCMovieCard: View {
     }
 
     private var hasBadges: Bool {
-        hasMegaReelDealBadge || hasEarlyAccessBadge || hasMegaMarathonBadge || hasFanEventBadge
+        hasMegaReelDealBadge || hasEarlyAccessBadge || hasInsiderBadge || hasMegaMarathonBadge || hasFanEventBadge
     }
 
     private var hasMegaReelDealBadge: Bool {
@@ -225,6 +251,10 @@ private struct FCMovieCard: View {
 
     private var hasEarlyAccessBadge: Bool {
         movie.title.range(of: earlyAccessPattern, options: [.regularExpression, .caseInsensitive]) != nil
+    }
+
+    private var hasInsiderBadge: Bool {
+        movie.title.range(of: insiderPattern, options: [.regularExpression, .caseInsensitive]) != nil
     }
 
     private var hasMegaMarathonBadge: Bool {
@@ -248,6 +278,11 @@ private struct FCMovieCard: View {
                 options: [.regularExpression, .caseInsensitive]
             )
             .replacingOccurrences(
+                of: insiderPattern,
+                with: "",
+                options: [.regularExpression, .caseInsensitive]
+            )
+            .replacingOccurrences(
                 of: megaMarathonPattern,
                 with: "",
                 options: [.regularExpression, .caseInsensitive]
@@ -267,6 +302,10 @@ private struct FCMovieCard: View {
 
     private var earlyAccessPattern: String {
         ":?\\s*Early Access (Screening|Event)"
+    }
+
+    private var insiderPattern: String {
+        ":?\\s*Insider Screenings"
     }
 
     private var megaMarathonPattern: String {
