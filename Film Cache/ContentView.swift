@@ -26,7 +26,7 @@ struct ContentView: View {
                 Tab(value: FCAppState.TabOption.utahTheater) {
                     FCUtahTheaterSchedule()
                 } label: {
-                    Label("Utah Theater", systemImage: "theatermasks")
+                    Label("Utah Theatre", systemImage: "theatermasks")
                 }
             }
         }

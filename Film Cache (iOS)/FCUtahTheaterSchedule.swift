@@ -34,7 +34,7 @@ struct FCUtahTheaterSchedule: View {
         ContentUnavailableView(
             "Schedule Unavailable",
             systemImage: "photo",
-            description: Text("The Utah Theater schedule could not be loaded.")
+            description: Text("The Utah Theatre schedule could not be loaded.")
         )
         .frame(maxWidth: .infinity, maxHeight: .infinity)
     }

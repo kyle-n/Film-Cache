@@ -104,7 +104,7 @@ enum FCTheater: String, CaseIterable {
         case .MegaplexUniversity:
             return "Megaplex University Stadium 6"
         case .UtahTheater:
-            return "The Utah Theater"
+            return "The Utah Theatre"
         }
     }
 }
