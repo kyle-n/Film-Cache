@@ -33,14 +33,14 @@ let mockMovieCaughtStealing = MegaplexScheduledMovie(
             formatHOPK: "vs00000001",
             salesChannels: ";ATMOB;IVR;CALL;FAND;FANDM;GSALE;MXHW;WWW;KIOSK;CELL;PDA;MTINT;MTMOB;MXATM;MXFD;MXS;MXTV;POSBK;POS;RSP;SKI;",
             sessionAttributesNames: [
-                MegaplexAttributesName.the2D,
-                MegaplexAttributesName.cc,
-                MegaplexAttributesName.dvs
+                "2D",
+                "CC",
+                "DVS"
             ],
             conceptAttributesNames: [
-                MegaplexAttributesName.the2D,
-                MegaplexAttributesName.cc,
-                MegaplexAttributesName.dvs
+                "2D",
+                "CC",
+                "DVS"
             ],
             allowTicketSales: true,
             hasDynamicallyPricedTicketsAvailable: false,

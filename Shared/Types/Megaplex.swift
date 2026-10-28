@@ -106,8 +106,8 @@ struct MegaplexSession: Codable {
     let formatCode: String
     let formatHOPK: String
     let salesChannels: String
-    let sessionAttributesNames: [MegaplexAttributesName]
-    let conceptAttributesNames: [MegaplexAttributesName]
+    let sessionAttributesNames: [String]
+    let conceptAttributesNames: [String]
     let allowTicketSales: Bool
     let hasDynamicallyPricedTicketsAvailable: Bool
     let playThroughId: AnyCodable?
@@ -120,21 +120,6 @@ struct MegaplexSession: Codable {
 }
 
 // MARK: - Enums
-
-enum MegaplexAttributesName: String, Codable {
-    case cc = "CC"
-    case dbox = "DBOX"
-    case dvs = "DVS"
-    case luxury = "Luxury"
-    case openCapt = "Open Capt"
-    case sensory = "Sensory"
-    case the2D = "2D"
-    case the3D = "3D"
-    case englishDub = "EnglishDub"
-    case quietRoom = "Quiet Room"
-    case megaScreen = "MegaScreen"
-    case atmos = "ATMOS"
-}
 
 enum MegaplexTypeCode: String, Codable {
     case n = "N"
