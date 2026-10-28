@@ -266,7 +266,7 @@ private struct FCMovieCard: View {
     }
 
     private var earlyAccessPattern: String {
-        ":?\\s*Early Access Screening"
+        ":?\\s*Early Access (Screening|Event)"
     }
 
     private var megaMarathonPattern: String {
